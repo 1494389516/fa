@@ -1,0 +1,38 @@
+{
+  "name": "douyin-monitor-miniprogram",
+  "version": "1.0.0",
+  "description": "一个用于监控抖音博主和音乐歌手动态的微信小程序演示项目",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "cd server && npm start",
+    "dev": "cd server && npm run dev",
+    "install-server": "cd server && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/douyin-monitor-miniprogram.git"
+  },
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "douyin",
+    "music",
+    "monitor",
+    "nodejs",
+    "express"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/douyin-monitor-miniprogram/issues"
+  },
+  "homepage": "https://github.com/yourusername/douyin-monitor-miniprogram#readme",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}
