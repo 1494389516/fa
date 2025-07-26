@@ -1,0 +1,328 @@
+/* pages/douyin-auth/douyin-auth.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 0 20rpx;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  margin-bottom: 40rpx;
+}
+
+.back-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.back-icon {
+  font-size: 32rpx;
+  color: #ffffff;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* 步骤内容 */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+}
+
+/* 介绍区域 */
+.intro-section {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.intro-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.intro-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 20rpx;
+}
+
+.intro-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #b0b0b0;
+  line-height: 1.6;
+  max-width: 500rpx;
+}
+
+/* 功能列表 */
+.features-list {
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20rpx);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-icon {
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+
+.feature-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.feature-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.feature-desc {
+  font-size: 26rpx;
+  color: #b0b0b0;
+}
+
+/* 隐私声明 */
+.privacy-notice {
+  margin-bottom: 60rpx;
+}
+
+.privacy-text {
+  font-size: 24rpx;
+  color: #b0b0b0;
+  text-align: center;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.btn-primary,
+.btn-secondary {
+  width: 100%;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: white;
+  box-shadow: 0 8rpx 24rpx rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #b0b0b0;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* 加载状态 */
+.loading-section {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 4rpx solid rgba(0, 212, 255, 0.2);
+  border-top: 4rpx solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 40rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 16rpx;
+}
+
+.loading-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #b0b0b0;
+}
+
+/* 进度步骤 */
+.progress-steps {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  width: 100%;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.step-dot {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .step-dot {
+  background: #00d4ff;
+  box-shadow: 0 0 20rpx rgba(0, 212, 255, 0.5);
+}
+
+.step-text {
+  font-size: 24rpx;
+  color: #b0b0b0;
+}
+
+.progress-step.active .step-text {
+  color: #ffffff;
+}
+
+/* 成功状态 */
+.success-section {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.success-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.success-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #00ff88;
+  margin-bottom: 20rpx;
+}
+
+.success-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #b0b0b0;
+  line-height: 1.6;
+  max-width: 500rpx;
+}
+
+/* 下一步提示 */
+.next-steps {
+  width: 100%;
+}
+
+.next-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.next-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.next-item:last-child {
+  border-bottom: none;
+}
+
+.next-icon {
+  font-size: 32rpx;
+  margin-right: 20rpx;
+}
+
+.next-text {
+  font-size: 26rpx;
+  color: #b0b0b0;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .container {
+    padding: 0 16rpx;
+  }
+  
+  .intro-icon {
+    font-size: 100rpx;
+  }
+  
+  .intro-title {
+    font-size: 36rpx;
+  }
+  
+  .feature-item {
+    padding: 24rpx;
+  }
+  
+  .feature-icon {
+    font-size: 40rpx;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    height: 80rpx;
+    font-size: 28rpx;
+  }
+}

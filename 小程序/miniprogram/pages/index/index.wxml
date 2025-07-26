@@ -1,0 +1,46 @@
+<!-- pages/index/index.wxml - 首页模板 -->
+<view class="index-container">
+  <!-- 背景动画 -->
+  <view class="bg-animation">
+    <view class="particle" wx:for="{{[1,2,3,4,5,6]}}" wx:key="*this"></view>
+  </view>
+
+  <!-- 加载内容 -->
+  <view class="loading-content" wx:if="{{loading}}">
+    <!-- Logo -->
+    <view class="logo-container">
+      <image src="/images/logo.png" class="logo" mode="aspectFit"></image>
+      <view class="logo-glow"></view>
+    </view>
+
+    <!-- 应用名称 -->
+    <view class="app-name">抖音博主监控</view>
+    <view class="app-slogan">实时追踪，精彩不错过</view>
+
+    <!-- 进度条 -->
+    <view class="progress-container">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progress}}%"></view>
+      </view>
+      <view class="progress-text">{{progress}}%</view>
+    </view>
+
+    <!-- 状态文本 -->
+    <view class="status-text">{{statusText}}</view>
+  </view>
+
+  <!-- 错误状态 -->
+  <view class="error-content" wx:else>
+    <view class="error-icon">⚠️</view>
+    <view class="error-title">启动失败</view>
+    <view class="error-desc">{{statusText}}</view>
+    <button class="btn btn-primary retry-btn" bindtap="onRetry">
+      重新尝试
+    </button>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">v1.0.0</text>
+  </view>
+</view>

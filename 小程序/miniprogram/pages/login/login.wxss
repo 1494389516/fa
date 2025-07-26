@@ -1,0 +1,316 @@
+/* pages/login/login.wxss - 抖音登录页面样式 */
+
+.login-container {
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景装饰 */
+.bg-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  width: 200%;
+  height: 200rpx;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+  animation: wave 8s linear infinite;
+}
+
+.wave-1 {
+  top: 20%;
+  animation-delay: 0s;
+}
+
+.wave-2 {
+  top: 50%;
+  animation-delay: 2s;
+  animation-duration: 10s;
+}
+
+.wave-3 {
+  top: 80%;
+  animation-delay: 4s;
+  animation-duration: 12s;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(0%) rotate(360deg);
+  }
+}
+
+/* 主要内容 */
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 80rpx 60rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 头部 */
+.header {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.douyin-logo {
+  margin-bottom: 40rpx;
+}
+
+.logo-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 16rpx;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* 授权步骤 */
+.steps {
+  margin-bottom: 60rpx;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  background: var(--card-bg);
+  backdrop-filter: blur(10rpx);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all var(--transition-normal);
+  opacity: 0.6;
+}
+
+.step-item.active {
+  opacity: 1;
+  border-color: var(--tech-blue);
+  box-shadow: var(--shadow-tech);
+  transform: scale(1.02);
+}
+
+.step-icon {
+  font-size: 48rpx;
+  margin-right: 32rpx;
+  transition: all var(--transition-normal);
+}
+
+.step-item.active .step-icon {
+  animation: bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-8rpx);
+  }
+}
+
+.step-info {
+  flex: 1;
+}
+
+.step-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.step-desc {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.step-indicator {
+  position: absolute;
+  right: 32rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16rpx;
+  height: 16rpx;
+  background: var(--tech-blue);
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 功能预览 */
+.features-preview {
+  margin-bottom: 60rpx;
+}
+
+.preview-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx 24rpx;
+  background: var(--card-bg);
+  backdrop-filter: blur(10rpx);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.preview-item:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.15);
+}
+
+.preview-icon {
+  font-size: 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.preview-text {
+  font-size: 26rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* 操作按钮 */
+.actions {
+  margin-bottom: 40rpx;
+}
+
+.auth-btn {
+  width: 100%;
+  height: 88rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 32rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.auth-btn:not([disabled]):active::before {
+  left: 100%;
+}
+
+.action-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+}
+
+.link-text {
+  font-size: 26rpx;
+  color: var(--tech-blue);
+  text-decoration: underline;
+}
+
+.link-divider {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+/* 安全提示 */
+.security-notice {
+  display: flex;
+  align-items: flex-start;
+  padding: 32rpx;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: var(--border-radius-md);
+  border-left: 4rpx solid var(--tech-blue);
+  margin-bottom: 40rpx;
+}
+
+.notice-icon {
+  font-size: 32rpx;
+  margin-right: 20rpx;
+  margin-top: 4rpx;
+}
+
+.notice-text {
+  flex: 1;
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* 底部帮助 */
+.footer-help {
+  text-align: center;
+  margin-top: auto;
+}
+
+.help-text {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-right: 16rpx;
+}
+
+.help-link {
+  font-size: 24rpx;
+  color: var(--tech-blue);
+  text-decoration: underline;
+}
+
+/* 加载状态 */
+.auth-btn[loading] {
+  background: linear-gradient(135deg, #666, #888);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-btn[disabled] {
+  opacity: 0.6;
+  transform: none !important;
+}

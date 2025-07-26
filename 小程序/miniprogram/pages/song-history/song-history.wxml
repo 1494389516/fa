@@ -1,0 +1,135 @@
+<!--pages/song-history/song-history.wxml - 歌曲更新历史页面-->
+<view class="song-history-page">
+  <!-- 统计信息 -->
+  <view class="stats-section">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-number">{{stats.total}}</text>
+        <text class="stat-label">总歌曲</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.unread}}</text>
+        <text class="stat-label">未读</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.today}}</text>
+        <text class="stat-label">今日</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.week}}</text>
+        <text class="stat-label">本周</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选和操作栏 -->
+  <view class="filter-section">
+    <view class="filter-row">
+      <!-- 筛选类型 -->
+      <picker 
+        mode="selector" 
+        range="{{['全部', '未读', '已读']}}" 
+        range-key="label"
+        value="{{filterType === 'all' ? 0 : filterType === 'unread' ? 1 : 2}}"
+        bindchange="onFilterTypeChange"
+      >
+        <view class="filter-item">
+          <text class="filter-label">状态</text>
+          <text class="filter-value">
+            {{filterType === 'all' ? '全部' : filterType === 'unread' ? '未读' : '已读'}}
+          </text>
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+
+      <!-- 日期范围 -->
+      <picker 
+        mode="selector" 
+        range="{{['今天', '本周', '本月', '全部']}}"
+        value="{{dateRange === 'today' ? 0 : dateRange === 'week' ? 1 : dateRange === 'month' ? 2 : 3}}"
+        bindchange="onDateRangeChange"
+      >
+        <view class="filter-item">
+          <text class="filter-label">时间</text>
+          <text class="filter-value">
+            {{dateRange === 'today' ? '今天' : dateRange === 'week' ? '本周' : dateRange === 'month' ? '本月' : '全部'}}
+          </text>
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+
+      <!-- 批量操作按钮 -->
+      <view class="batch-btn" bindtap="toggleBatchMode">
+        <text class="iconfont {{batchMode ? 'icon-close' : 'icon-select'}}"></text>
+        <text class="batch-text">{{batchMode ? '取消' : '批量'}}</text>
+      </view>
+    </view>
+
+    <!-- 批量操作栏 -->
+    <view class="batch-actions" wx:if="{{batchMode}}">
+      <view class="batch-info">
+        <text class="select-all" bindtap="toggleSelectAll">
+          {{selectedSongs.length === songUpdates.length ? '取消全选' : '全选'}}
+        </text>
+        <text class="selected-count">已选择 {{selectedSongs.length}} 项</text>
+      </view>
+      <view class="batch-buttons">
+        <button class="batch-button" bindtap="batchMarkRead" disabled="{{selectedSongs.length === 0}}">
+          标记已读
+        </button>
+        <button class="batch-button danger" bindtap="batchDelete" disabled="{{selectedSongs.length === 0}}">
+          删除
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 歌曲列表 -->
+  <view class="song-list">
+    <!-- 加载状态 -->
+    <loading wx:if="{{loading}}" text="加载中..." />
+
+    <!-- 空状态 -->
+    <empty-state 
+      wx:elif="{{!loading && songUpdates.length === 0}}"
+      icon="music"
+      title="暂无歌曲更新"
+      description="还没有关注的歌手发布新歌曲"
+      action-text="去关注歌手"
+      bind:action="goToArtistList"
+    />
+
+    <!-- 歌曲列表 -->
+    <view wx:else>
+      <song-item
+        wx:for="{{songUpdates}}"
+        wx:key="_id"
+        song="{{item}}"
+        batch-mode="{{batchMode}}"
+        selected="{{selectedSongs.includes(item._id)}}"
+        bind:tap="onSongTap"
+        bind:longpress="onSongLongPress"
+        bind:select="onSongSelect"
+      />
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{hasMore}}">
+        <loading wx:if="{{loadingMore}}" size="small" text="加载更多..." />
+        <text wx:else class="load-more-text">上拉加载更多</text>
+      </view>
+
+      <!-- 没有更多 -->
+      <view class="no-more" wx:elif="{{songUpdates.length > 0}}">
+        <text class="no-more-text">没有更多歌曲了</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 去关注歌手页面 -->
+<view class="go-to-artist" wx:if="{{songUpdates.length === 0 && !loading}}">
+  <button class="go-button" bindtap="goToArtistList">
+    <text class="iconfont icon-add"></text>
+    <text>关注歌手</text>
+  </button>
+</view>

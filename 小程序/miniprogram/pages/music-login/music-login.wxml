@@ -1,0 +1,35 @@
+<!--pages/music-login/music-login.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">选择音乐平台</text>
+    <text class="subtitle">请选择要登录的音乐平台</text>
+  </view>
+  
+  <view class="platform-list">
+    <view 
+      class="platform-item {{selectedPlatform && selectedPlatform.id === item.id ? 'selected' : ''}}"
+      wx:for="{{platforms}}" 
+      wx:key="id"
+      bindtap="onPlatformSelect"
+      data-platform="{{item}}"
+    >
+      <image class="platform-icon" src="{{item.icon}}" mode="aspectFit" />
+      <text class="platform-name">{{item.name}}</text>
+      <view class="check-icon" wx:if="{{selectedPlatform && selectedPlatform.id === item.id}}">
+        <text class="check-text">✓</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="login-section">
+    <button 
+      class="login-btn {{selectedPlatform ? 'active' : 'disabled'}}" 
+      bindtap="onLogin"
+      disabled="{{!selectedPlatform}}"
+    >
+      登录 {{selectedPlatform ? selectedPlatform.name : '音乐平台'}}
+    </button>
+    
+    <text class="login-tip">登录后可以监控您关注的歌手动态</text>
+  </view>
+</view>

@@ -1,0 +1,283 @@
+<!-- pages/settings/settings.wxml - 用户设置页面模板 -->
+<view class="settings-container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-avatar">
+      <image src="{{userInfo.avatar || '/images/default-avatar.png'}}" 
+             class="avatar-img" 
+             mode="aspectFill">
+      </image>
+      <view class="avatar-ring"></view>
+    </view>
+    <view class="user-info">
+      <view class="user-name">{{userInfo.nickname || '未知用户'}}</view>
+      <view class="user-stats">
+        <view class="stat-item">
+          <text class="stat-value">{{stats.monitoringCount}}</text>
+          <text class="stat-label">监控中</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.totalUpdates}}</text>
+          <text class="stat-label">总更新</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.todayUpdates}}</text>
+          <text class="stat-label">今日</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置列表 -->
+  <view class="settings-list">
+    <!-- 监控设置 -->
+    <view class="settings-section">
+      <view class="section-title">
+        <view class="title-icon">⚙️</view>
+        <view class="title-text">监控设置</view>
+      </view>
+      
+      <view class="setting-item" bindtap="onIntervalTap">
+        <view class="item-content">
+          <view class="item-icon">⏱️</view>
+          <view class="item-info">
+            <view class="item-title">监控频率</view>
+            <view class="item-desc">设置检查更新的时间间隔</view>
+          </view>
+          <view class="item-value">{{getIntervalText()}}</view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 推送设置 -->
+    <view class="settings-section">
+      <view class="section-title">
+        <view class="title-icon">🔔</view>
+        <view class="title-text">推送设置</view>
+      </view>
+      
+      <view class="setting-item">
+        <view class="item-content">
+          <view class="item-icon">📢</view>
+          <view class="item-info">
+            <view class="item-title">推送通知</view>
+            <view class="item-desc">开启后将接收更新推送</view>
+          </view>
+          <switch class="item-switch"
+                  checked="{{tempSettings.pushEnabled}}"
+                  bindchange="onPushToggle"
+                  color="#00d4ff">
+          </switch>
+        </view>
+      </view>
+
+      <view class="setting-item" wx:if="{{tempSettings.pushEnabled}}">
+        <view class="item-content" bindtap="onPushTimeStartTap">
+          <view class="item-icon">🌅</view>
+          <view class="item-info">
+            <view class="item-title">推送开始时间</view>
+            <view class="item-desc">设置接收推送的开始时间</view>
+          </view>
+          <view class="item-value">{{tempSettings.pushTime.start}}</view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" wx:if="{{tempSettings.pushEnabled}}">
+        <view class="item-content" bindtap="onPushTimeEndTap">
+          <view class="item-icon">🌙</view>
+          <view class="item-info">
+            <view class="item-title">推送结束时间</view>
+            <view class="item-desc">设置接收推送的结束时间</view>
+          </view>
+          <view class="item-value">{{tempSettings.pushTime.end}}</view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" wx:if="{{tempSettings.pushEnabled}}">
+        <view class="item-content" bindtap="testPush">
+          <view class="item-icon">🧪</view>
+          <view class="item-info">
+            <view class="item-title">测试推送</view>
+            <view class="item-desc">发送一条测试推送消息</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 平台绑定 -->
+    <view class="settings-section">
+      <view class="section-title">
+        <view class="title-icon">🔗</view>
+        <view class="title-text">平台绑定</view>
+      </view>
+      
+      <view class="setting-item" bindtap="onDouyinBind">
+        <view class="item-content">
+          <view class="item-icon">🎵</view>
+          <view class="item-info">
+            <view class="item-title">抖音</view>
+            <view class="item-desc">{{platformStatus.douyin ? '已绑定' : '未绑定'}}</view>
+          </view>
+          <view class="item-status {{platformStatus.douyin ? 'connected' : 'disconnected'}}">
+            {{platformStatus.douyin ? '已连接' : '未连接'}}
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="onQQMusicBind">
+        <view class="item-content">
+          <view class="item-icon">🎶</view>
+          <view class="item-info">
+            <view class="item-title">QQ音乐</view>
+            <view class="item-desc">{{platformStatus.qqMusic ? '已绑定' : '未绑定'}}</view>
+          </view>
+          <view class="item-status {{platformStatus.qqMusic ? 'connected' : 'disconnected'}}">
+            {{platformStatus.qqMusic ? '已连接' : '未连接'}}
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 数据管理 -->
+    <view class="settings-section">
+      <view class="section-title">
+        <view class="title-icon">💾</view>
+        <view class="title-text">数据管理</view>
+      </view>
+      
+      <view class="setting-item" bindtap="clearCache">
+        <view class="item-content">
+          <view class="item-icon">🧹</view>
+          <view class="item-info">
+            <view class="item-title">清除缓存</view>
+            <view class="item-desc">清除应用缓存数据</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="exportData">
+        <view class="item-content">
+          <view class="item-icon">📤</view>
+          <view class="item-info">
+            <view class="item-title">导出数据</view>
+            <view class="item-desc">导出监控和历史数据</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关于应用 -->
+    <view class="settings-section">
+      <view class="section-title">
+        <view class="title-icon">ℹ️</view>
+        <view class="title-text">关于应用</view>
+      </view>
+      
+      <view class="setting-item" bindtap="onAbout">
+        <view class="item-content">
+          <view class="item-icon">📱</view>
+          <view class="item-info">
+            <view class="item-title">关于我们</view>
+            <view class="item-desc">应用版本和开发信息</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="onFeedback">
+        <view class="item-content">
+          <view class="item-icon">💬</view>
+          <view class="item-info">
+            <view class="item-title">意见反馈</view>
+            <view class="item-desc">提交问题和建议</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="onPrivacyPolicy">
+        <view class="item-content">
+          <view class="item-icon">🛡️</view>
+          <view class="item-info">
+            <view class="item-title">隐私政策</view>
+            <view class="item-desc">了解我们如何保护您的隐私</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="onUserAgreement">
+        <view class="item-content">
+          <view class="item-icon">📋</view>
+          <view class="item-info">
+            <view class="item-title">用户协议</view>
+            <view class="item-desc">查看使用条款和协议</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 退出登录 -->
+    <view class="settings-section">
+      <view class="setting-item logout-item" bindtap="onLogout">
+        <view class="item-content">
+          <view class="item-icon">🚪</view>
+          <view class="item-info">
+            <view class="item-title">退出登录</view>
+            <view class="item-desc">退出当前账号</view>
+          </view>
+          <view class="item-arrow">›</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-button-container" wx:if="{{JSON.stringify(tempSettings) !== JSON.stringify(settings)}}">
+    <button class="save-button {{saving ? 'loading' : ''}}" 
+            bindtap="saveSettings"
+            disabled="{{saving}}">
+      <view class="button-content">
+        <view class="button-icon" wx:if="{{!saving}}">💾</view>
+        <view class="loading-spinner" wx:if="{{saving}}"></view>
+        <view class="button-text">{{saving ? '保存中...' : '保存设置'}}</view>
+      </view>
+    </button>
+  </view>
+
+  <!-- 选择器 -->
+  <!-- 监控间隔选择器 -->
+  <picker-view class="interval-picker {{showIntervalPicker ? 'show' : ''}}"
+               bindchange="onIntervalChange"
+               bindcancel="onIntervalCancel">
+    <picker-view-column>
+      <view wx:for="{{intervalOptions}}" wx:key="value" class="picker-item">
+        {{item.label}}
+      </view>
+    </picker-view-column>
+  </picker-view>
+
+  <!-- 时间选择器 -->
+  <picker mode="time" 
+          value="{{timePickerType === 'start' ? tempSettings.pushTime.start : tempSettings.pushTime.end}}"
+          bindchange="onTimeChange"
+          bindcancel="onTimeCancel"
+          class="time-picker {{showTimePicker ? 'show' : ''}}">
+  </picker>
+
+  <!-- 遮罩层 -->
+  <view class="picker-mask {{showIntervalPicker || showTimePicker ? 'show' : ''}}"
+        bindtap="onIntervalCancel">
+  </view>
+</view>

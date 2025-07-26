@@ -1,0 +1,268 @@
+/* pages/song-history/song-history.wxss - 歌曲更新历史页面样式 */
+
+.song-history-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 统计信息区域 */
+.stats-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40rpx 30rpx 30rpx;
+  color: white;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 筛选区域 */
+.filter-section {
+  background: white;
+  border-bottom: 1rpx solid #eee;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  gap: 30rpx;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 15rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+}
+
+.filter-label {
+  color: #666;
+  font-size: 24rpx;
+}
+
+.filter-value {
+  color: #333;
+  font-weight: 500;
+}
+
+.icon-arrow-down {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: 5rpx;
+}
+
+.batch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 15rpx 20rpx;
+  background: #007aff;
+  color: white;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  margin-left: auto;
+}
+
+.batch-btn .iconfont {
+  font-size: 24rpx;
+}
+
+.batch-text {
+  font-size: 24rpx;
+}
+
+/* 批量操作栏 */
+.batch-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background: #f8f9fa;
+  border-top: 1rpx solid #eee;
+}
+
+.batch-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.select-all {
+  color: #007aff;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.selected-count {
+  color: #666;
+  font-size: 24rpx;
+}
+
+.batch-buttons {
+  display: flex;
+  gap: 20rpx;
+}
+
+.batch-button {
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  border-radius: 16rpx;
+  border: none;
+  background: #007aff;
+  color: white;
+}
+
+.batch-button:disabled {
+  background: #ccc;
+  color: #999;
+}
+
+.batch-button.danger {
+  background: #ff3b30;
+}
+
+.batch-button.danger:disabled {
+  background: #ffccc7;
+  color: #ff9999;
+}
+
+/* 歌曲列表 */
+.song-list {
+  flex: 1;
+  padding: 20rpx 0;
+}
+
+/* 加载更多 */
+.load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx;
+}
+
+.load-more-text {
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 没有更多 */
+.no-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx;
+}
+
+.no-more-text {
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+/* 去关注歌手按钮 */
+.go-to-artist {
+  position: fixed;
+  bottom: 100rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.go-button {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 20rpx 40rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+  border: none;
+}
+
+.go-button .iconfont {
+  font-size: 32rpx;
+}
+
+.go-button::after {
+  border: none;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .stats-grid {
+    gap: 20rpx;
+  }
+  
+  .stat-number {
+    font-size: 40rpx;
+  }
+  
+  .filter-row {
+    gap: 20rpx;
+    padding: 15rpx 20rpx;
+  }
+  
+  .filter-item {
+    padding: 12rpx 16rpx;
+    font-size: 26rpx;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .song-history-page {
+    background-color: #1a1a1a;
+  }
+  
+  .filter-section {
+    background: #2a2a2a;
+    border-bottom-color: #333;
+  }
+  
+  .filter-item {
+    background: #333;
+  }
+  
+  .filter-label {
+    color: #999;
+  }
+  
+  .filter-value {
+    color: #fff;
+  }
+  
+  .batch-actions {
+    background: #333;
+    border-top-color: #444;
+  }
+  
+  .selected-count {
+    color: #999;
+  }
+}

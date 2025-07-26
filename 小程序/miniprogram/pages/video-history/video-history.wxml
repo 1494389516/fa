@@ -1,0 +1,130 @@
+<view class="container">
+  <!-- 顶部筛选栏 -->
+  <view class="filter-bar">
+    <scroll-view class="filter-scroll" scroll-x="true">
+      <view class="filter-item {{filterType === 'all' ? 'active' : ''}}" 
+            data-type="all" bindtap="onFilterChange">
+        全部
+      </view>
+      <view class="filter-item {{filterType === 'today' ? 'active' : ''}}" 
+            data-type="today" bindtap="onFilterChange">
+        今天
+      </view>
+      <view class="filter-item {{filterType === 'week' ? 'active' : ''}}" 
+            data-type="week" bindtap="onFilterChange">
+        本周
+      </view>
+      <view class="filter-item {{filterType === 'month' ? 'active' : ''}}" 
+            data-type="month" bindtap="onFilterChange">
+        本月
+      </view>
+    </scroll-view>
+    
+    <!-- 博主筛选 -->
+    <view class="blogger-filter">
+      <view wx:if="{{selectedBlogger}}" class="selected-blogger">
+        <text class="blogger-name">{{selectedBlogger.name}}</text>
+        <view class="clear-btn" bindtap="onClearBloggerFilter">×</view>
+      </view>
+      <view wx:else class="select-blogger-btn" bindtap="onSelectBlogger">
+        选择博主
+      </view>
+    </view>
+  </view>
+
+  <!-- 视频列表 -->
+  <view class="video-list">
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading-container">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{videos.length === 0}}" class="empty-state">
+      <image src="/images/empty-video.png" class="empty-icon" mode="aspectFit" />
+      <view class="empty-title">暂无视频更新</view>
+      <view class="empty-desc">
+        {{selectedBlogger ? '该博主暂无视频更新' : '还没有监控到任何视频更新'}}
+      </view>
+    </view>
+
+    <!-- 视频项 -->
+    <view wx:else>
+      <view class="video-item" 
+            wx:for="{{videos}}" 
+            wx:key="_id"
+            data-video="{{item}}"
+            bindtap="onVideoTap">
+        
+        <!-- 视频封面 -->
+        <view class="video-cover">
+          <image src="{{item.cover}}" class="cover-image" mode="aspectFill" />
+          <view class="duration">{{item.formattedDuration}}</view>
+          <view class="play-icon">▶</view>
+        </view>
+
+        <!-- 视频信息 -->
+        <view class="video-info">
+          <!-- 博主信息 -->
+          <view class="blogger-info" 
+                data-blogger="{{item.blogger}}"
+                bindtap="onBloggerTap"
+                catchtap="onBloggerTap">
+            <image src="{{item.blogger.avatar}}" class="blogger-avatar" mode="aspectFill" />
+            <text class="blogger-name">{{item.blogger.nickname}}</text>
+            <view class="verified-icon" wx:if="{{item.blogger.isVerified}}">✓</view>
+          </view>
+
+          <!-- 视频标题 -->
+          <view class="video-title">{{item.title}}</view>
+
+          <!-- 视频描述 -->
+          <view class="video-desc" wx:if="{{item.description}}">
+            {{item.description}}
+          </view>
+
+          <!-- 统计数据 -->
+          <view class="video-stats">
+            <view class="stat-item">
+              <text class="stat-icon">👁</text>
+              <text class="stat-text">{{item.formattedStats.playCount}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-icon">❤️</text>
+              <text class="stat-text">{{item.formattedStats.likeCount}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-icon">💬</text>
+              <text class="stat-text">{{item.formattedStats.commentCount}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-icon">📤</text>
+              <text class="stat-text">{{item.formattedStats.shareCount}}</text>
+            </view>
+          </view>
+
+          <!-- 时间信息 -->
+          <view class="time-info">
+            <text class="publish-time">发布：{{item.formattedPublishTime}}</text>
+            <text class="detect-time">发现：{{item.formattedTime}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 加载更多 -->
+      <view wx:if="{{hasMore}}" class="load-more">
+        <view wx:if="{{loadingMore}}" class="loading-more">
+          <view class="loading-spinner small"></view>
+          <text>加载更多...</text>
+        </view>
+        <view wx:else class="load-more-tip">上拉加载更多</view>
+      </view>
+
+      <!-- 没有更多 -->
+      <view wx:else class="no-more">
+        <text>没有更多视频了</text>
+      </view>
+    </view>
+  </view>
+</view>

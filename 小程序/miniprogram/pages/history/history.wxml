@@ -1,0 +1,160 @@
+<!--pages/history/history.wxml - 更新历史页面-->
+<view class="history-page">
+  <!-- 统计信息 -->
+  <view class="stats-section">
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-number">{{stats.totalVideos + stats.totalSongs}}</text>
+        <text class="stat-label">总更新</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.unreadVideos + stats.unreadSongs}}</text>
+        <text class="stat-label">未读</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.todayVideos + stats.todaySongs}}</text>
+        <text class="stat-label">今日</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标签页切换 -->
+  <view class="tab-section">
+    <view class="tab-list">
+      <view 
+        class="tab-item {{activeTab === 'all' ? 'active' : ''}}"
+        data-tab="all"
+        bindtap="switchTab"
+      >
+        <text class="tab-text">全部</text>
+        <text class="tab-count">{{stats.totalVideos + stats.totalSongs}}</text>
+      </view>
+      
+      <view 
+        class="tab-item {{activeTab === 'videos' ? 'active' : ''}}"
+        data-tab="videos"
+        bindtap="switchTab"
+      >
+        <text class="tab-text">视频</text>
+        <text class="tab-count">{{stats.totalVideos}}</text>
+      </view>
+      
+      <view 
+        class="tab-item {{activeTab === 'songs' ? 'active' : ''}}"
+        data-tab="songs"
+        bindtap="switchTab"
+      >
+        <text class="tab-text">歌曲</text>
+        <text class="tab-count">{{stats.totalSongs}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-section">
+    <view class="filter-row">
+      <picker 
+        mode="selector" 
+        range="{{['全部', '未读', '已读']}}" 
+        value="{{filterType === 'all' ? 0 : filterType === 'unread' ? 1 : 2}}"
+        bindchange="onFilterTypeChange"
+      >
+        <view class="filter-item">
+          <text class="filter-label">状态</text>
+          <text class="filter-value">
+            {{filterType === 'all' ? '全部' : filterType === 'unread' ? '未读' : '已读'}}
+          </text>
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+
+      <picker 
+        mode="selector" 
+        range="{{['今天', '本周', '本月', '全部']}}"
+        value="{{dateRange === 'today' ? 0 : dateRange === 'week' ? 1 : dateRange === 'month' ? 2 : 3}}"
+        bindchange="onDateRangeChange"
+      >
+        <view class="filter-item">
+          <text class="filter-label">时间</text>
+          <text class="filter-value">
+            {{dateRange === 'today' ? '今天' : dateRange === 'week' ? '本周' : dateRange === 'month' ? '本月' : '全部'}}
+          </text>
+          <text class="iconfont icon-arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 更新列表 -->
+  <view class="update-list">
+    <!-- 加载状态 -->
+    <loading wx:if="{{loading}}" text="加载中..." />
+
+    <!-- 空状态 -->
+    <empty-state 
+      wx:elif="{{!loading && updates.length === 0}}"
+      icon="history"
+      title="暂无更新记录"
+      description="还没有发现新的内容更新"
+      action-text="去添加关注"
+      bind:action="goToManage"
+    />
+
+    <!-- 更新条目 -->
+    <view wx:else>
+      <view 
+        class="update-item-wrapper" 
+        wx:for="{{updates}}" 
+        wx:key="_id"
+      >
+        <!-- 视频条目 -->
+        <video-item
+          wx:if="{{item.type === 'video'}}"
+          video="{{item}}"
+          show-blogger="{{true}}"
+          show-status="{{true}}"
+          bind:tap="onUpdateTap"
+        />
+
+        <!-- 歌曲条目 -->
+        <song-item
+          wx:elif="{{item.type === 'song'}}"
+          song="{{item}}"
+          show-artist="{{true}}"
+          show-status="{{true}}"
+          bind:tap="onUpdateTap"
+        />
+      </view>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{hasMore}}">
+        <loading wx:if="{{loadingMore}}" size="small" text="加载更多..." />
+        <text wx:else class="load-more-text">上拉加载更多</text>
+      </view>
+
+      <!-- 没有更多 -->
+      <view class="no-more" wx:elif="{{updates.length > 0}}">
+        <text class="no-more-text">没有更多了</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷操作按钮 -->
+  <view class="fab-container">
+    <view class="fab-menu">
+      <view class="fab-item" bindtap="goToVideoHistory">
+        <view class="fab-icon video">
+          <text class="iconfont icon-video"></text>
+        </view>
+        <text class="fab-label">视频</text>
+      </view>
+      
+      <view class="fab-item" bindtap="goToSongHistory">
+        <view class="fab-icon song">
+          <text class="iconfont icon-music"></text>
+        </view>
+        <text class="fab-label">歌曲</text>
+      </view>
+    </view>
+  </view>
+</view>

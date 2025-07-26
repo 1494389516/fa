@@ -1,0 +1,97 @@
+<!--pages/api-info/api-info.wxml-->
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="page-title">API集成说明</text>
+  </view>
+
+  <view class="content">
+    <view class="intro-section">
+      <text class="intro-title">为什么使用演示数据？</text>
+      <text class="intro-desc">
+        由于第三方平台API的限制，小程序无法直接获取用户在抖音、QQ音乐等平台的真实数据。
+        真实的集成需要复杂的企业级开发流程。
+      </text>
+    </view>
+
+    <view class="api-list">
+      <view 
+        class="api-card"
+        wx:for="{{apiInfo}}"
+        wx:key="platform"
+      >
+        <view class="card-header">
+          <text class="platform-name">{{item.platform}}</text>
+          <view class="status-badge">{{item.status}}</view>
+        </view>
+
+        <view class="card-section">
+          <text class="section-title">申请要求</text>
+          <view class="requirement-list">
+            <view 
+              class="requirement-item"
+              wx:for="{{item.requirements}}"
+              wx:key="*this"
+              wx:for-item="req"
+            >
+              <text class="requirement-dot">•</text>
+              <text class="requirement-text">{{req}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="card-section">
+          <text class="section-title">主要API</text>
+          <view class="api-list-items">
+            <view 
+              class="api-item"
+              wx:for="{{item.apis}}"
+              wx:key="*this"
+              wx:for-item="api"
+            >
+              <text class="api-text">{{api}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="card-section">
+          <text class="section-title">限制条件</text>
+          <view class="limitation-list">
+            <view 
+              class="limitation-item"
+              wx:for="{{item.limitations}}"
+              wx:key="*this"
+              wx:for-item="limitation"
+            >
+              <text class="limitation-dot">⚠️</text>
+              <text class="limitation-text">{{limitation}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="card-footer">
+          <button 
+            class="doc-btn"
+            bindtap="viewOfficialDoc"
+            data-platform="{{item.platform}}"
+          >
+            查看官方文档
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <view class="demo-notice">
+      <view class="notice-icon">💡</view>
+      <view class="notice-content">
+        <text class="notice-title">演示说明</text>
+        <text class="notice-desc">
+          当前小程序使用模拟数据来展示功能效果。
+          在真实的企业级应用中，需要完成上述API集成流程才能获取真实用户数据。
+        </text>
+      </view>
+    </view>
+  </view>
+</view>

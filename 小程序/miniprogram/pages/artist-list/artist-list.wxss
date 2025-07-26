@@ -1,0 +1,114 @@
+/* pages/artist-list/artist-list.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #1a1a2e;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.add-btn {
+  background-color: #00d4ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 10rpx;
+  padding: 15rpx 30rpx;
+  font-size: 28rpx;
+}
+
+.search-bar {
+  margin-bottom: 30rpx;
+}
+
+.search-input {
+  width: 100%;
+  height: 80rpx;
+  background-color: #16213e;
+  border: 1px solid #0f3460;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  color: #ffffff;
+  font-size: 28rpx;
+}
+
+.search-input::placeholder {
+  color: #b0b0b0;
+}
+
+.artist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.artist-item {
+  display: flex;
+  align-items: center;
+  background-color: #16213e;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  border: 1px solid #0f3460;
+}
+
+.artist-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+}
+
+.artist-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.artist-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.artist-desc {
+  font-size: 26rpx;
+  color: #b0b0b0;
+}
+
+.update-time {
+  font-size: 24rpx;
+  color: #888888;
+}
+
+.artist-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.status-text {
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.status-text.active {
+  background-color: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+}
+
+.status-text.inactive {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #b0b0b0;
+}

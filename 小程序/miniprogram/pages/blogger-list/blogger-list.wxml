@@ -1,0 +1,154 @@
+<!--pages/blogger-list/blogger-list.wxml-->
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-content">
+      <text class="page-title">抖音博主</text>
+      <view class="header-actions">
+        <view class="refresh-btn" bindtap="onRefresh">
+          <text class="icon">🔄</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 搜索栏 -->
+    <view class="search-section">
+      <view class="search-bar">
+        <text class="search-icon">🔍</text>
+        <input 
+          class="search-input" 
+          placeholder="搜索博主昵称或简介"
+          value="{{searchKeyword}}"
+          bindinput="onSearchInput"
+        />
+        <text wx:if="{{searchKeyword}}" class="clear-icon" bindtap="onClearSearch">✕</text>
+      </view>
+    </view>
+
+    <!-- 筛选标签 -->
+    <view class="filter-tabs">
+      <view 
+        class="filter-tab {{filterType === 'all' ? 'active' : ''}}"
+        data-type="all"
+        bindtap="onFilterChange"
+      >
+        全部
+      </view>
+      <view 
+        class="filter-tab {{filterType === 'monitoring' ? 'active' : ''}}"
+        data-type="monitoring"
+        bindtap="onFilterChange"
+      >
+        监控中
+      </view>
+      <view 
+        class="filter-tab {{filterType === 'not_monitoring' ? 'active' : ''}}"
+        data-type="not_monitoring"
+        bindtap="onFilterChange"
+      >
+        未监控
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-number">{{stats.total}}</text>
+      <text class="stat-label">关注总数</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number monitoring">{{stats.monitoring}}</text>
+      <text class="stat-label">监控中</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number not-monitoring">{{stats.notMonitoring}}</text>
+      <text class="stat-label">未监控</text>
+    </view>
+  </view>
+
+  <!-- 博主列表 -->
+  <view class="blogger-list">
+    <!-- 加载状态 -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:elif="{{bloggers.length === 0}}" class="empty-state">
+      <view class="empty-icon">👥</view>
+      <text class="empty-title">暂无关注的博主</text>
+      <text class="empty-desc">请先在抖音关注一些博主，然后刷新页面</text>
+      <button class="empty-action" bindtap="onRefresh">刷新页面</button>
+    </view>
+
+    <!-- 博主卡片 -->
+    <view wx:else class="blogger-cards">
+      <view 
+        class="blogger-card"
+        wx:for="{{bloggers}}"
+        wx:key="id"
+        bindtap="onBloggerTap"
+        data-blogger="{{item}}"
+      >
+        <view class="card-content">
+          <!-- 头像 -->
+          <view class="avatar-section">
+            <image class="avatar" src="{{item.avatar}}" mode="aspectFill" />
+            <view class="online-status {{item.isOnline ? 'online' : 'offline'}}"></view>
+          </view>
+
+          <!-- 信息区域 -->
+          <view class="info-section">
+            <view class="blogger-info">
+              <text class="blogger-name">{{item.nickname}}</text>
+              <text class="blogger-desc">{{item.signature || '这个人很懒，什么都没留下'}}</text>
+            </view>
+            
+            <view class="stats-info">
+              <view class="stat-item">
+                <text class="stat-value">{{item.followerCount}}</text>
+                <text class="stat-label">粉丝</text>
+              </view>
+              <view class="stat-item">
+                <text class="stat-value">{{item.videoCount}}</text>
+                <text class="stat-label">作品</text>
+              </view>
+              <view class="stat-item">
+                <text class="stat-value">{{item.newVideoCount || 0}}</text>
+                <text class="stat-label">新作品</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 操作区域 -->
+          <view class="action-section">
+            <switch 
+              class="monitor-switch"
+              checked="{{item.isMonitoring}}"
+              bindchange="onSwitchChange"
+              data-id="{{item.id}}"
+              color="#00d4ff"
+            />
+            <text class="switch-label">{{item.isMonitoring ? '监控中' : '未监控'}}</text>
+          </view>
+        </view>
+
+        <!-- 最新视频预览 -->
+        <view wx:if="{{item.latestVideo && item.isMonitoring}}" class="latest-video">
+          <text class="latest-label">最新:</text>
+          <text class="latest-title">{{item.latestVideo.title}}</text>
+          <text class="latest-time">{{item.latestVideo.publishTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view wx:if="{{!loading && bloggers.length > 0}}" class="bottom-tip">
+    <text>下拉刷新获取最新数据</text>
+  </view>
+</view>

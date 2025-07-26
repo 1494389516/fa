@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/dashboard/dashboard",
+    "pages/index/index",
+    "pages/auth/auth",
+    "pages/login/login",
+    "pages/webview/webview",
+    "pages/blogger-list/blogger-list",
+    "pages/artist-list/artist-list",
+    "pages/history/history",
+    "pages/settings/settings",
+    "pages/video-detail/video-detail",
+    "pages/song-detail/song-detail",
+    "pages/music-login/music-login",
+    "pages/douyin-auth/douyin-auth",
+    "pages/video-history/video-history",
+    "pages/api-info/api-info"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "navigationBarTitleText": "内容监控助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#1a1a2e"
+  },
+  "tabBar": {
+    "color": "#b0b0b0",
+    "selectedColor": "#00d4ff",
+    "backgroundColor": "#1a1a2e",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/dashboard/dashboard",
+        "text": "控制台"
+      },
+      {
+        "pagePath": "pages/blogger-list/blogger-list",
+        "text": "抖音博主"
+      },
+      {
+        "pagePath": "pages/artist-list/artist-list",
+        "text": "音乐歌手"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "更新历史"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userInfo": {
+      "desc": "用于获取用户基本信息"
+    }
+  },
+  "requiredBackgroundModes": ["background-fetch"],
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

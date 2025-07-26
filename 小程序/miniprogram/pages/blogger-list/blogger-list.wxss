@@ -1,0 +1,420 @@
+/* pages/blogger-list/blogger-list.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding-bottom: 120rpx;
+}
+
+/* 头部区域 */
+.header {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20rpx);
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.page-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.refresh-btn {
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(0, 212, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:active {
+  transform: scale(0.9);
+  background: rgba(0, 212, 255, 0.3);
+}
+
+.refresh-btn .icon {
+  font-size: 24rpx;
+}
+
+/* 搜索区域 */
+.search-section {
+  margin-bottom: 20rpx;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 25rpx;
+  padding: 0 20rpx;
+  height: 70rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+  color: #b0b0b0;
+  margin-right: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #ffffff;
+  height: 100%;
+}
+
+.search-input::placeholder {
+  color: #b0b0b0;
+}
+
+.clear-icon {
+  font-size: 24rpx;
+  color: #b0b0b0;
+  padding: 8rpx;
+}
+
+/* 筛选标签 */
+.filter-tabs {
+  display: flex;
+  gap: 16rpx;
+}
+
+.filter-tab {
+  padding: 12rpx 24rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  color: #b0b0b0;
+  transition: all 0.3s ease;
+}
+
+.filter-tab.active {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: #ffffff;
+}
+
+/* 统计卡片 */
+.stats-card {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20rpx);
+  border-radius: 20rpx;
+  margin: 0 20rpx 20rpx;
+  padding: 30rpx;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-number {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.stat-number.monitoring {
+  color: #00d4ff;
+}
+
+.stat-number.not-monitoring {
+  color: #ff6b35;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #b0b0b0;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 20rpx;
+}
+
+/* 博主列表 */
+.blogger-list {
+  padding: 0 20rpx;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid rgba(0, 212, 255, 0.2);
+  border-top: 4rpx solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #b0b0b0;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 40rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+
+.empty-action {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: #ffffff;
+  border: none;
+  border-radius: 25rpx;
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+}
+
+/* 博主卡片 */
+.blogger-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.blogger-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20rpx);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.blogger-card:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+/* 头像区域 */
+.avatar-section {
+  position: relative;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 3rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.online-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  border: 3rpx solid #1a1a2e;
+}
+
+.online-status.online {
+  background: #00ff88;
+}
+
+.online-status.offline {
+  background: #666666;
+}
+
+/* 信息区域 */
+.info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.blogger-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.blogger-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.blogger-desc {
+  font-size: 24rpx;
+  color: #b0b0b0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-info {
+  display: flex;
+  gap: 24rpx;
+}
+
+.stats-info .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.stats-info .stat-value {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.stats-info .stat-label {
+  font-size: 20rpx;
+  color: #b0b0b0;
+}
+
+/* 操作区域 */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.monitor-switch {
+  transform: scale(0.8);
+}
+
+.switch-label {
+  font-size: 20rpx;
+  color: #b0b0b0;
+}
+
+/* 最新视频 */
+.latest-video {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.latest-label {
+  font-size: 22rpx;
+  color: #00d4ff;
+  font-weight: bold;
+}
+
+.latest-title {
+  flex: 1;
+  font-size: 24rpx;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.latest-time {
+  font-size: 20rpx;
+  color: #b0b0b0;
+}
+
+/* 底部提示 */
+.bottom-tip {
+  text-align: center;
+  padding: 40rpx;
+  color: #b0b0b0;
+  font-size: 24rpx;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .container {
+    padding-bottom: 100rpx;
+  }
+  
+  .header {
+    padding: 16rpx;
+  }
+  
+  .page-title {
+    font-size: 32rpx;
+  }
+  
+  .stats-card {
+    padding: 24rpx;
+    margin: 0 16rpx 16rpx;
+  }
+  
+  .blogger-list {
+    padding: 0 16rpx;
+  }
+  
+  .blogger-card {
+    padding: 20rpx;
+  }
+  
+  .avatar {
+    width: 80rpx;
+    height: 80rpx;
+  }
+}

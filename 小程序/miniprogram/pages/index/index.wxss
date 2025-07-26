@@ -1,0 +1,311 @@
+/* pages/index/index.wxss - 首页样式 */
+
+.index-container {
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景动画 */
+.bg-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4rpx;
+  height: 4rpx;
+  background: var(--tech-blue);
+  border-radius: 50%;
+  animation: particleFloat 8s linear infinite;
+  opacity: 0.6;
+}
+
+.particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+
+.particle:nth-child(2) {
+  left: 20%;
+  animation-delay: 1s;
+  animation-duration: 8s;
+}
+
+.particle:nth-child(3) {
+  left: 40%;
+  animation-delay: 2s;
+  animation-duration: 7s;
+}
+
+.particle:nth-child(4) {
+  left: 60%;
+  animation-delay: 3s;
+  animation-duration: 9s;
+}
+
+.particle:nth-child(5) {
+  left: 80%;
+  animation-delay: 4s;
+  animation-duration: 6s;
+}
+
+.particle:nth-child(6) {
+  left: 90%;
+  animation-delay: 5s;
+  animation-duration: 8s;
+}
+
+@keyframes particleFloat {
+  0% {
+    top: 100vh;
+    opacity: 0;
+    transform: translateX(0) scale(0);
+  }
+  10% {
+    opacity: 0.6;
+    transform: translateX(20rpx) scale(1);
+  }
+  90% {
+    opacity: 0.6;
+    transform: translateX(-20rpx) scale(1);
+  }
+  100% {
+    top: -10rpx;
+    opacity: 0;
+    transform: translateX(0) scale(0);
+  }
+}
+
+/* 加载内容 */
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Logo */
+.logo-container {
+  position: relative;
+  margin-bottom: 60rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 32rpx;
+  box-shadow: var(--shadow-tech);
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo-glow {
+  position: absolute;
+  top: -20rpx;
+  left: -20rpx;
+  right: -20rpx;
+  bottom: -20rpx;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* 应用名称 */
+.app-name {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 16rpx;
+  text-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.app-slogan {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 80rpx;
+  opacity: 0.8;
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+  }
+  100% {
+    text-shadow: 0 2px 16px rgba(0, 212, 255, 0.6);
+  }
+}
+
+/* 进度条 */
+.progress-container {
+  width: 400rpx;
+  margin-bottom: 40rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--tech-blue), #00a8cc);
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: progressShine 1.5s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--tech-blue);
+  font-weight: 500;
+}
+
+/* 状态文本 */
+.status-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  text-align: center;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 错误内容 */
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.error-icon {
+  font-size: 120rpx;
+  margin-bottom: 40rpx;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10rpx);
+  }
+  75% {
+    transform: translateX(10rpx);
+  }
+}
+
+.error-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--warning-orange);
+  margin-bottom: 16rpx;
+}
+
+.error-desc {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 60rpx;
+  line-height: 1.5;
+}
+
+.retry-btn {
+  width: 300rpx;
+  height: 80rpx;
+  font-size: 30rpx;
+  border-radius: var(--border-radius-md);
+}
+
+/* 版本信息 */
+.version-info {
+  position: absolute;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.version-text {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

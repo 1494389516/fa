@@ -1,0 +1,37 @@
+<!--pages/video-detail/video-detail.wxml-->
+<view class="container">
+  <loading wx:if="{{loading}}" />
+  
+  <view wx:else class="video-detail">
+    <view class="video-info">
+      <text class="video-title">{{video.title}}</text>
+      <text class="video-author">作者: {{video.author}}</text>
+      <text class="video-time">发布时间: {{video.publishTime}}</text>
+    </view>
+    
+    <view class="video-stats">
+      <view class="stat-item">
+        <text class="stat-label">播放量</text>
+        <text class="stat-value">{{video.viewCount}}</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-label">点赞数</text>
+        <text class="stat-value">{{video.likeCount}}</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-label">分享数</text>
+        <text class="stat-value">{{video.shareCount}}</text>
+      </view>
+    </view>
+    
+    <view class="video-description">
+      <text class="desc-title">视频描述</text>
+      <text class="desc-content">{{video.description}}</text>
+    </view>
+    
+    <view class="action-buttons">
+      <button class="action-btn" bindtap="onShareVideo">分享</button>
+      <button class="action-btn" bindtap="onDownloadVideo">下载</button>
+    </view>
+  </view>
+</view>

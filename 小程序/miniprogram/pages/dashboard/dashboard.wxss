@@ -1,0 +1,515 @@
+/* pages/dashboard/dashboard.wxss - 主控制台页面样式 */
+
+.dashboard-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20rpx;
+}
+
+/* 用户信息卡片 */
+.user-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 24rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.8);
+}
+
+.user-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 8rpx;
+}
+
+.user-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.user-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 24rpx;
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.action-btn .iconfont {
+  font-size: 28rpx;
+}
+
+/* 连接状态卡片 */
+.connection-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.card-subtitle {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.monitor-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.toggle-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.connection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.connection-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+}
+
+.connection-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.connection-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28rpx;
+}
+
+.connection-icon.douyin {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+}
+
+.connection-icon.qqmusic {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+}
+
+.connection-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.connection-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.connection-status {
+  font-size: 24rpx;
+}
+
+.connection-status.connected {
+  color: #10b981;
+}
+
+.connection-status.disconnected {
+  color: #ef4444;
+}
+
+.connect-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  border: none;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.connect-btn.connected {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.last-check {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.check-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.check-time {
+  font-size: 24rpx;
+  color: #1a1a2e;
+  font-weight: 500;
+}
+
+/* 统计数据卡片 */
+.stats-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.stats-section {
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.section-icon {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1a1a2e;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 最新更新卡片 */
+.updates-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.view-all {
+  font-size: 24rpx;
+  color: #00d4ff;
+  font-weight: 500;
+}
+
+.update-section {
+  margin-bottom: 24rpx;
+}
+
+.update-section:last-child {
+  margin-bottom: 0;
+}
+
+.view-more {
+  font-size: 24rpx;
+  color: #00d4ff;
+  font-weight: 500;
+}
+
+.update-list {
+  margin-top: 16rpx;
+}
+
+/* 快捷操作 */
+.quick-actions {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+  padding: 24rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.action-item:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.action-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36rpx;
+}
+
+.action-icon.douyin {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+}
+
+.action-icon.qqmusic {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+}
+
+.action-icon.video {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.action-icon.song {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.action-label {
+  font-size: 24rpx;
+  color: #1a1a2e;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* 空状态样式 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  padding: 60rpx 20rpx;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.empty-action {
+  margin-top: 20rpx;
+  padding: 16rpx 32rpx;
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: white;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  border: none;
+}
+
+.info-action {
+  margin-top: 16rpx;
+  padding: 12rpx 24rpx;
+  background: rgba(255, 255, 255, 0.1);
+  color: #b0b0b0;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+/* 加载状态样式 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .dashboard-page {
+    padding: 15rpx;
+  }
+  
+  .user-card {
+    padding: 24rpx;
+  }
+  
+  .user-avatar {
+    width: 100rpx;
+    height: 100rpx;
+  }
+  
+  .user-name {
+    font-size: 32rpx;
+  }
+  
+  .connection-card,
+  .stats-card,
+  .updates-card,
+  .quick-actions {
+    padding: 24rpx;
+  }
+  
+  .action-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16rpx;
+  }
+  
+  .action-item {
+    padding: 20rpx;
+  }
+  
+  .action-icon {
+    width: 60rpx;
+    height: 60rpx;
+    font-size: 28rpx;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .dashboard-page {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+  
+  .user-card,
+  .connection-card,
+  .stats-card,
+  .updates-card,
+  .quick-actions {
+    background: rgba(22, 33, 62, 0.95);
+    border: 1rpx solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .connection-item,
+  .stats-section,
+  .action-item {
+    background: rgba(15, 52, 96, 0.6);
+    border: 1rpx solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .user-name,
+  .card-title,
+  .connection-name,
+  .section-title,
+  .stat-number,
+  .action-label {
+    color: white;
+  }
+  
+  .user-desc,
+  .card-subtitle,
+  .toggle-label,
+  .check-label,
+  .stat-label {
+    color: #adb5bd;
+  }
+  
+  .check-time {
+    color: white;
+  }
+}

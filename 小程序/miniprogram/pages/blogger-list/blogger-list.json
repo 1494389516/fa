@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "blogger-card": "/components/blogger-card/blogger-card",
+    "empty-state": "/components/empty-state/empty-state"
+  },
+  "navigationBarTitleText": "抖音博主"
+}

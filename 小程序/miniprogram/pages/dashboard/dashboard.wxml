@@ -1,0 +1,178 @@
+<!--pages/dashboard/dashboard.wxml - 主控制台页面-->
+<view class="dashboard-page">
+  <!-- 用户信息卡片 -->
+  <view class="user-card" wx:if="{{userInfo}}">
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickname || '用户'}}</text>
+      <text class="user-desc">欢迎使用内容监控助手</text>
+    </view>
+    <view class="user-actions">
+      <button class="action-btn" bindtap="manualCheck">检查更新</button>
+    </view>
+  </view>
+
+  <!-- 连接状态卡片 -->
+  <view class="connection-card">
+    <view class="card-header">
+      <text class="card-title">平台连接</text>
+      <view class="monitor-toggle">
+        <text class="toggle-label">监控状态</text>
+        <switch 
+          checked="{{monitoringActive}}" 
+          bindchange="toggleMonitoring"
+          color="#00d4ff"
+        />
+      </view>
+    </view>
+    
+    <view class="connection-list">
+      <!-- 抖音连接 -->
+      <view class="connection-item">
+        <view class="connection-info">
+          <view class="connection-details">
+            <text class="connection-name">抖音</text>
+            <text class="connection-status {{douyinConnected ? 'connected' : 'disconnected'}}">
+              {{douyinConnected ? '已连接' : '未连接'}}
+            </text>
+          </view>
+        </view>
+        <view class="connection-action">
+          <button 
+            class="connect-btn {{douyinConnected ? 'connected' : ''}}" 
+            bindtap="{{douyinConnected ? 'viewDouyinBloggers' : 'connectDouyin'}}"
+          >
+            {{douyinConnected ? '管理' : '连接'}}
+          </button>
+        </view>
+      </view>
+
+      <!-- QQ音乐连接 -->
+      <view class="connection-item">
+        <view class="connection-info">
+          <view class="connection-details">
+            <text class="connection-name">QQ音乐</text>
+            <text class="connection-status {{qqMusicConnected ? 'connected' : 'disconnected'}}">
+              {{qqMusicConnected ? '已连接' : '未连接'}}
+            </text>
+          </view>
+        </view>
+        <view class="connection-action">
+          <button 
+            class="connect-btn {{qqMusicConnected ? 'connected' : ''}}" 
+            bindtap="{{qqMusicConnected ? 'viewQQMusicArtists' : 'connectQQMusic'}}"
+          >
+            {{qqMusicConnected ? '管理' : '连接'}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最后检查时间 -->
+    <view class="last-check" wx:if="{{lastCheckTime}}">
+      <text class="check-label">最后检查：</text>
+      <text class="check-time">{{lastCheckTime}}</text>
+    </view>
+  </view>
+
+  <!-- 统计数据卡片 -->
+  <view class="stats-card">
+    <view class="card-header">
+      <text class="card-title">数据统计</text>
+      <text class="card-subtitle">今日更新情况</text>
+    </view>
+    
+    <view class="stats-grid">
+      <!-- 抖音统计 -->
+      <view class="stats-section">
+        <view class="section-header">
+          <text class="section-title">抖音</text>
+        </view>
+        <view class="stats-row">
+          <view class="stat-item">
+            <text class="stat-number">{{stats.douyinBloggers}}</text>
+            <text class="stat-label">关注博主</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.douyinVideos}}</text>
+            <text class="stat-label">总视频</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.douyinUnread}}</text>
+            <text class="stat-label">未读</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.douyinToday}}</text>
+            <text class="stat-label">今日</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- QQ音乐统计 -->
+      <view class="stats-section">
+        <view class="section-header">
+          <text class="section-title">QQ音乐</text>
+        </view>
+        <view class="stats-row">
+          <view class="stat-item">
+            <text class="stat-number">{{stats.qqMusicArtists}}</text>
+            <text class="stat-label">关注歌手</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.qqMusicSongs}}</text>
+            <text class="stat-label">总歌曲</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.qqMusicUnread}}</text>
+            <text class="stat-label">未读</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-number">{{stats.qqMusicToday}}</text>
+            <text class="stat-label">今日</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最新更新卡片 -->
+  <view class="updates-card">
+    <view class="card-header">
+      <text class="card-title">最新更新</text>
+      <text class="view-all" bindtap="viewAllHistory">查看全部</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state">
+      <text class="empty-title">暂无更新</text>
+      <text class="empty-desc">当前使用演示数据，真实集成需要API对接</text>
+      <button class="empty-action" bindtap="manualCheck">立即检查</button>
+      <button class="info-action" bindtap="viewApiInfo">查看API说明</button>
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions">
+    <view class="action-grid">
+      <view class="action-item" bindtap="viewDouyinBloggers">
+        <text class="action-label">抖音博主</text>
+      </view>
+      
+      <view class="action-item" bindtap="viewQQMusicArtists">
+        <text class="action-label">音乐歌手</text>
+      </view>
+      
+      <view class="action-item" bindtap="viewVideoHistory">
+        <text class="action-label">视频历史</text>
+      </view>
+      
+      <view class="action-item" bindtap="viewSongHistory">
+        <text class="action-label">歌曲历史</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+</view>

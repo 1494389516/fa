@@ -1,0 +1,45 @@
+<!-- pages/webview/webview.wxml - WebView页面模板 -->
+<view class="webview-container">
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <view class="loading-content">
+      <view class="loading-spinner">
+        <view class="spinner-dot"></view>
+        <view class="spinner-dot"></view>
+        <view class="spinner-dot"></view>
+      </view>
+      <view class="loading-text">正在加载授权页面...</view>
+      <view class="loading-tip">请稍候，正在连接服务器</view>
+    </view>
+  </view>
+
+  <!-- 错误状态 -->
+  <view class="error-overlay" wx:if="{{error}}">
+    <view class="error-content">
+      <view class="error-icon">⚠️</view>
+      <view class="error-title">加载失败</view>
+      <view class="error-message">页面加载失败，请检查网络连接</view>
+      <view class="error-actions">
+        <button class="error-btn retry-btn" bindtap="onRefresh">重新加载</button>
+        <button class="error-btn back-btn" bindtap="onGoBack">返回</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- WebView -->
+  <web-view 
+    wx:if="{{url && !error}}"
+    src="{{url}}" 
+    bindmessage="onMessage"
+    bindload="onWebViewLoad"
+    binderror="onWebViewError">
+  </web-view>
+
+  <!-- 底部提示 -->
+  <view class="webview-footer" wx:if="{{!loading && !error}}">
+    <view class="footer-text">
+      <view class="security-tip">🔒 安全提示：您正在进行第三方授权</view>
+      <view class="auth-tip">请在授权页面完成登录，授权完成后将自动返回</view>
+    </view>
+  </view>
+</view>

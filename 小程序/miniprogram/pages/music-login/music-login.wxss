@@ -1,0 +1,109 @@
+/* pages/music-login/music-login.wxss */
+.container {
+  padding: 40rpx 20rpx;
+  background-color: #1a1a2e;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #b0b0b0;
+}
+
+.platform-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 60rpx;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  background-color: #16213e;
+  border: 2rpx solid #0f3460;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.platform-item.selected {
+  border-color: #00d4ff;
+  background-color: rgba(0, 212, 255, 0.1);
+}
+
+.platform-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 30rpx;
+}
+
+.platform-name {
+  font-size: 30rpx;
+  color: #ffffff;
+  flex: 1;
+}
+
+.check-icon {
+  width: 40rpx;
+  height: 40rpx;
+  background-color: #00d4ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-text {
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30rpx;
+}
+
+.login-btn {
+  width: 100%;
+  height: 80rpx;
+  border-radius: 15rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  border: none;
+}
+
+.login-btn.active {
+  background-color: #00d4ff;
+  color: #ffffff;
+}
+
+.login-btn.disabled {
+  background-color: #16213e;
+  color: #666666;
+}
+
+.login-tip {
+  font-size: 24rpx;
+  color: #b0b0b0;
+  text-align: center;
+  line-height: 1.5;
+}

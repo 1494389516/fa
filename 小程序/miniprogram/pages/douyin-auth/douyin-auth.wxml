@@ -1,0 +1,91 @@
+<!--pages/douyin-auth/douyin-auth.wxml-->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="page-title">连接抖音</text>
+  </view>
+
+  <!-- 步骤1: 说明页 -->
+  <view wx:if="{{step === 1}}" class="step-content">
+    <view class="intro-section">
+      <view class="intro-icon">🎵</view>
+      <text class="intro-title">连接您的抖音账号</text>
+      <text class="intro-desc">连接后可以监控您关注的博主动态，第一时间获取最新内容</text>
+    </view>
+
+    <view class="features-list">
+      <view 
+        class="feature-item"
+        wx:for="{{authSteps}}"
+        wx:key="index"
+      >
+        <view class="feature-icon">{{item.icon}}</view>
+        <view class="feature-content">
+          <text class="feature-title">{{item.title}}</text>
+          <text class="feature-desc">{{item.desc}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="privacy-notice">
+      <text class="privacy-text">🔒 我们承诺保护您的隐私安全</text>
+    </view>
+
+    <view class="action-buttons">
+      <button class="btn-primary" bindtap="startAuth">开始连接</button>
+      <button class="btn-secondary" bindtap="skipAuth">暂时跳过</button>
+    </view>
+  </view>
+
+  <!-- 步骤2: 授权中 -->
+  <view wx:if="{{step === 2}}" class="step-content">
+    <view class="loading-section">
+      <view class="loading-spinner"></view>
+      <text class="loading-title">正在连接抖音...</text>
+      <text class="loading-desc">请稍候，正在为您建立连接</text>
+    </view>
+
+    <view class="progress-steps">
+      <view class="progress-step active">
+        <view class="step-dot"></view>
+        <text class="step-text">验证身份</text>
+      </view>
+      <view class="progress-step active">
+        <view class="step-dot"></view>
+        <text class="step-text">获取权限</text>
+      </view>
+      <view class="progress-step">
+        <view class="step-dot"></view>
+        <text class="step-text">完成连接</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤3: 完成 -->
+  <view wx:if="{{step === 3}}" class="step-content">
+    <view class="success-section">
+      <view class="success-icon">✅</view>
+      <text class="success-title">连接成功！</text>
+      <text class="success-desc">您的抖音账号已成功连接，现在可以开始监控博主动态了</text>
+    </view>
+
+    <view class="next-steps">
+      <text class="next-title">接下来您可以：</text>
+      <view class="next-item">
+        <text class="next-icon">👥</text>
+        <text class="next-text">查看关注的博主列表</text>
+      </view>
+      <view class="next-item">
+        <text class="next-icon">⚙️</text>
+        <text class="next-text">设置监控偏好</text>
+      </view>
+      <view class="next-item">
+        <text class="next-icon">🔔</text>
+        <text class="next-text">接收更新通知</text>
+      </view>
+    </view>
+  </view>
+</view>

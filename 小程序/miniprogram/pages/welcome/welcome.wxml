@@ -1,0 +1,58 @@
+<!--pages/welcome/welcome.wxml-->
+<view class="welcome-container">
+  <view class="welcome-content">
+    <!-- 步骤指示器 -->
+    <view class="step-indicator">
+      <view 
+        class="step-dot {{index <= currentStep ? 'active' : ''}}"
+        wx:for="{{steps}}" 
+        wx:key="index"
+      ></view>
+    </view>
+
+    <!-- 内容区域 -->
+    <view class="content-area">
+      <view class="welcome-image">
+        <image src="{{steps[currentStep].image}}" mode="aspectFit" />
+      </view>
+      
+      <view class="welcome-text">
+        <text class="welcome-title">{{steps[currentStep].title}}</text>
+        <text class="welcome-desc">{{steps[currentStep].desc}}</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button 
+        wx:if="{{currentStep > 0}}" 
+        class="btn-secondary" 
+        bindtap="prevStep"
+      >
+        上一步
+      </button>
+      
+      <button 
+        wx:if="{{currentStep < steps.length - 1}}" 
+        class="btn-primary" 
+        bindtap="nextStep"
+      >
+        下一步
+      </button>
+      
+      <button 
+        wx:if="{{currentStep === steps.length - 1}}" 
+        class="btn-primary {{loading ? 'loading' : ''}}" 
+        bindtap="startAuth"
+        disabled="{{loading}}"
+      >
+        {{loading ? '授权中...' : '开始使用'}}
+      </button>
+    </view>
+
+    <!-- 跳过按钮 -->
+    <view class="skip-button" bindtap="skipWelcome">
+      <text>跳过引导</text>
+    </view>
+  </view>
+</view>

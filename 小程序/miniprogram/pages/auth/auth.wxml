@@ -1,0 +1,140 @@
+<!-- pages/auth/auth.wxml - 权限授权页面模板 -->
+<view class="auth-container" animation="{{pageAnimation}}">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="circle circle-1"></view>
+    <view class="circle circle-2"></view>
+    <view class="circle circle-3"></view>
+    <view class="bg-gradient"></view>
+  </view>
+
+  <!-- 主要内容 -->
+  <view class="content">
+    <!-- Logo和标题 -->
+    <view class="header">
+      <view class="logo">
+        <view class="logo-icon">🎬</view>
+      </view>
+      <view class="title">{{appInfo.name}}</view>
+      <view class="subtitle">{{appInfo.description}}</view>
+      <view class="version">v{{appInfo.version}}</view>
+    </view>
+
+    <!-- 授权状态指示器 -->
+    <view class="auth-status" wx:if="{{authStep > 0}}">
+      <view class="status-step {{authStep >= 1 ? 'active' : ''}}" wx:if="{{authStep >= 1}}">
+        <view class="step-icon">🔍</view>
+        <view class="step-text">检查权限</view>
+      </view>
+      <view class="status-step {{authStep >= 2 ? 'active' : ''}}" wx:if="{{authStep >= 2}}">
+        <view class="step-icon">🔐</view>
+        <view class="step-text">微信登录</view>
+      </view>
+      <view class="status-step {{authStep >= 3 ? 'active' : ''}}" wx:if="{{authStep >= 3}}">
+        <view class="step-icon">✅</view>
+        <view class="step-text">授权完成</view>
+      </view>
+    </view>
+
+    <!-- 功能介绍 -->
+    <view class="features" wx:if="{{authStep === 0}}">
+      <view class="feature-title">核心功能</view>
+      <view class="feature-grid">
+        <view class="feature-card" wx:for="{{features}}" wx:key="*this" wx:for-index="index">
+          <view class="feature-icon">{{index === 0 ? '📺' : index === 1 ? '🔔' : index === 2 ? '⚙️' : '📊'}}</view>
+          <view class="feature-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 权限说明 -->
+    <view class="permissions" wx:if="{{authStep === 0}}">
+      <view class="permission-title">所需权限</view>
+      <view class="permission-list">
+        <view class="permission-item" wx:for="{{permissions}}" wx:key="title">
+          <view class="permission-icon">{{item.icon}}</view>
+          <view class="permission-info">
+            <view class="permission-name">{{item.title}}</view>
+            <view class="permission-desc">{{item.desc}}</view>
+          </view>
+          <view class="permission-badge" wx:if="{{item.required}}">必需</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+      <!-- 开始授权按钮 -->
+      <button class="btn btn-primary auth-btn {{loading ? 'loading' : ''}}" 
+              bindtap="onStartAuth" 
+              wx:if="{{!hasAuthorized && authStep === 0}}"
+              disabled="{{loading}}">
+        <view class="btn-content">
+          <view class="btn-icon" wx:if="{{!loading}}">🚀</view>
+          <view class="btn-loading" wx:if="{{loading}}">
+            <view class="loading-dot"></view>
+            <view class="loading-dot"></view>
+            <view class="loading-dot"></view>
+          </view>
+          <view class="btn-text">{{loading ? '授权中...' : '开始使用'}}</view>
+        </view>
+      </button>
+      
+      <!-- 处理中按钮 -->
+      <button class="btn btn-processing auth-btn" 
+              wx:if="{{authStep === 1 || authStep === 2}}"
+              disabled="true">
+        <view class="btn-content">
+          <view class="btn-loading">
+            <view class="loading-dot"></view>
+            <view class="loading-dot"></view>
+            <view class="loading-dot"></view>
+          </view>
+          <view class="btn-text">
+            {{authStep === 1 ? '检查权限中...' : '微信登录中...'}}
+          </view>
+        </view>
+      </button>
+
+      <!-- 成功按钮 -->
+      <button class="btn btn-success auth-btn" 
+              bindtap="navigateToDashboard" 
+              wx:if="{{hasAuthorized && authStep === 3}}">
+        <view class="btn-content">
+          <view class="btn-icon">✅</view>
+          <view class="btn-text">授权成功</view>
+        </view>
+      </button>
+    </view>
+
+    <!-- 底部链接 -->
+    <view class="footer">
+      <view class="footer-links">
+        <view class="footer-link" bindtap="onViewPrivacy">
+          <view class="link-icon">🛡️</view>
+          <view class="link-text">隐私政策</view>
+        </view>
+        <view class="footer-divider"></view>
+        <view class="footer-link" bindtap="onContactService">
+          <view class="link-icon">💬</view>
+          <view class="link-text">联系我们</view>
+        </view>
+      </view>
+      <view class="footer-copyright">
+        © 2024 抖音监控助手. 保留所有权利.
+      </view>
+    </view>
+  </view>
+
+  <!-- 权限授权弹窗 -->
+  <permission-modal
+    show="{{showModal}}"
+    title="权限授权"
+    permissions="{{permissions}}"
+    features="{{features}}"
+    bind:agree="onAgreeAuth"
+    bind:reject="onRejectAuth"
+    bind:close="onCloseModal"
+    bind:viewPrivacy="onViewPrivacy">
+  </permission-modal>
+</view>

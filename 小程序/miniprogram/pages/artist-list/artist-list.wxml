@@ -1,0 +1,29 @@
+<!--pages/artist-list/artist-list.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">音乐歌手监控</text>
+    <button class="add-btn" bindtap="onAddArtist">添加歌手</button>
+  </view>
+  
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索歌手..." bindinput="onSearchInput" />
+  </view>
+  
+  <view class="artist-list" wx:if="{{artists.length > 0}}">
+    <view class="artist-item" wx:for="{{artists}}" wx:key="id" bindtap="onArtistTap" data-artist="{{item}}">
+      <image class="artist-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" mode="aspectFill" />
+      <view class="artist-info">
+        <text class="artist-name">{{item.name}}</text>
+        <text class="artist-desc">{{item.description || '暂无描述'}}</text>
+        <text class="update-time">最后更新: {{item.lastUpdate || '未知'}}</text>
+      </view>
+      <view class="artist-status">
+        <text class="status-text {{item.isActive ? 'active' : 'inactive'}}">
+          {{item.isActive ? '监控中' : '已暂停'}}
+        </text>
+      </view>
+    </view>
+  </view>
+  
+  <empty-state wx:else title="暂无歌手" desc="点击右上角添加按钮开始监控歌手" />
+</view>
