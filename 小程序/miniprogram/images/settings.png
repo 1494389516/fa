@@ -1,0 +1,7 @@
+<svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="40.5" cy="40.5" r="8" fill="#b0b0b0"/>
+<path d="M40.5 10L44.5 18H52.5L46.5 24L48.5 32L40.5 28L32.5 32L34.5 24L28.5 18H36.5L40.5 10Z" fill="none" stroke="#b0b0b0" stroke-width="2"/>
+<path d="M40.5 71L44.5 63H52.5L46.5 57L48.5 49L40.5 53L32.5 49L34.5 57L28.5 63H36.5L40.5 71Z" fill="none" stroke="#b0b0b0" stroke-width="2"/>
+<path d="M10 40.5L18 36.5V28.5L24 34.5L32 32.5L28 40.5L32 48.5L24 46.5L18 52.5V44.5L10 40.5Z" fill="none" stroke="#b0b0b0" stroke-width="2"/>
+<path d="M71 40.5L63 44.5V52.5L57 46.5L49 48.5L53 40.5L49 32.5L57 34.5L63 28.5V36.5L71 40.5Z" fill="none" stroke="#b0b0b0" stroke-width="2"/>
+</svg>
