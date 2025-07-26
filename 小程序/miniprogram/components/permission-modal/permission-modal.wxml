@@ -1,0 +1,60 @@
+<!-- components/permission-modal/permission-modal.wxml -->
+<view class="permission-modal" wx:if="{{show}}">
+  <!-- 遮罩层 -->
+  <view class="modal-mask" animation="{{maskAnimation}}" bindtap="onClose"></view>
+  
+  <!-- 弹窗内容 -->
+  <view class="modal-content" animation="{{animationData}}" catchtap="onStopPropagation">
+    <!-- 头部 -->
+    <view class="modal-header">
+      <view class="header-icon">🔐</view>
+      <view class="header-title">{{title}}</view>
+      <view class="header-subtitle">为了给您提供更好的服务体验</view>
+    </view>
+
+    <!-- 权限列表 -->
+    <view class="permissions-section">
+      <view class="section-title">需要以下权限</view>
+      <view class="permissions-list">
+        <view class="permission-item" wx:for="{{permissions}}" wx:key="title">
+          <view class="permission-icon">{{item.icon}}</view>
+          <view class="permission-info">
+            <view class="permission-title">{{item.title}}</view>
+            <view class="permission-desc">{{item.desc}}</view>
+          </view>
+          <view class="permission-required" wx:if="{{item.required}}">必需</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 功能介绍 -->
+    <view class="features-section" wx:if="{{features.length > 0}}">
+      <view class="section-title">主要功能</view>
+      <view class="features-list">
+        <view class="feature-item" wx:for="{{features}}" wx:key="*this">
+          <view class="feature-dot"></view>
+          <view class="feature-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 隐私说明 -->
+    <view class="privacy-section">
+      <view class="privacy-text">
+        我们承诺严格保护您的隐私安全，仅在必要时使用相关权限，不会收集与功能无关的个人信息。
+      </view>
+      <view class="privacy-link" bindtap="onViewPrivacy">查看隐私政策</view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="modal-actions">
+      <view class="action-btn reject-btn" bindtap="onReject">
+        <view class="btn-text">暂不授权</view>
+      </view>
+      <view class="action-btn agree-btn" bindtap="onAgree">
+        <view class="btn-text">同意授权</view>
+        <view class="btn-icon">✓</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,116 @@
+<!-- components/song-item/song-item.wxml - 歌曲条目组件模板 -->
+<view class="song-item {{itemStyle}} {{isRead ? 'read' : 'unread'}} {{isFavorited ? 'favorited' : ''}}"
+      bindtap="onSongTap"
+      bindlongpress="onSongLongPress">
+  
+  <!-- 未读指示器 -->
+  <view class="unread-indicator" wx:if="{{!isRead}}"></view>
+  
+  <!-- 歌曲封面 -->
+  <view class="cover-section">
+    <view class="cover-container">
+      <image class="cover-image {{imageLoaded ? 'loaded' : ''}}"
+             src="{{formattedSong.coverUrl}}"
+             mode="aspectFill"
+             bindload="onCoverLoad"
+             binderror="onCoverError">
+      </image>
+      
+      <!-- 加载占位符 -->
+      <view class="cover-placeholder" wx:if="{{!imageLoaded}}">
+        <view class="placeholder-icon">🎵</view>
+      </view>
+      
+      <!-- 时长标签 -->
+      <view class="duration-label" wx:if="{{formattedSong.durationText}}">
+        {{formattedSong.durationText}}
+      </view>
+      
+      <!-- 播放按钮 -->
+      <view class="play-button {{isPlaying ? 'playing' : ''}}" bindtap="onPlayTap">
+        <view class="play-icon">{{isPlaying ? '⏸' : '▶'}}</view>
+      </view>
+      
+      <!-- 语言标识 -->
+      <view class="language-badge" wx:if="{{formattedSong.languageText}}">
+        {{formattedSong.languageText}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content-section">
+    <!-- 标题和专辑 -->
+    <view class="title-section">
+      <text class="song-title">{{formattedSong.titleText}}</text>
+      <text class="album-name" wx:if="{{formattedSong.albumName}}"> - {{formattedSong.albumName}}</text>
+    </view>
+
+    <!-- 歌手信息 -->
+    <view class="artist-section" wx:if="{{showArtist}}" bindtap="onArtistTap">
+      <image class="artist-avatar" 
+             src="{{formattedSong.artistAvatar}}" 
+             mode="aspectFill">
+      </image>
+      <text class="artist-name">{{formattedSong.artistName}}</text>
+    </view>
+
+    <!-- 发布时间 -->
+    <view class="time-section">
+      <text class="release-time">{{formattedSong.releaseTimeText}}</text>
+    </view>
+
+    <!-- 统计数据 -->
+    <view class="stats-section" wx:if="{{showStats}}">
+      <view class="stat-item" wx:if="{{formattedSong.playCountText !== '0'}}">
+        <view class="stat-icon">🎧</view>
+        <text class="stat-text">{{formattedSong.playCountText}}</text>
+      </view>
+      <view class="stat-item" wx:if="{{formattedSong.likeCountText !== '0'}}">
+        <view class="stat-icon">❤️</view>
+        <text class="stat-text">{{formattedSong.likeCountText}}</text>
+      </view>
+      <view class="stat-item" wx:if="{{formattedSong.commentCountText !== '0'}}">
+        <view class="stat-icon">💬</view>
+        <text class="stat-text">{{formattedSong.commentCountText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section">
+    <!-- 收藏按钮 -->
+    <view class="action-button favorite-btn {{isFavorited ? 'favorited' : ''}}" bindtap="onFavoriteTap">
+      <view class="action-icon">{{isFavorited ? '❤️' : '🤍'}}</view>
+    </view>
+    
+    <!-- 更多操作 -->
+    <view class="action-button more-btn" wx:if="{{itemStyle === 'card'}}">
+      <view class="action-icon">⋯</view>
+      
+      <!-- 下拉菜单 -->
+      <view class="action-menu">
+        <view class="menu-item" bindtap="onShareTap">
+          <view class="menu-icon">📤</view>
+          <text class="menu-text">分享</text>
+        </view>
+        <view class="menu-item" bindtap="onDownloadTap">
+          <view class="menu-icon">⬇️</view>
+          <text class="menu-text">下载</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收藏状态指示 -->
+  <view class="favorite-indicator" wx:if="{{isFavorited}}">
+    <view class="favorite-glow"></view>
+  </view>
+
+  <!-- 音乐波纹效果 -->
+  <view class="music-waves" wx:if="{{isPlaying}}">
+    <view class="wave wave-1"></view>
+    <view class="wave wave-2"></view>
+    <view class="wave wave-3"></view>
+  </view>
+</view>

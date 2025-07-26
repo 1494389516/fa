@@ -1,0 +1,92 @@
+<!-- components/artist-card/artist-card.wxml - 歌手卡片组件模板 -->
+<view class="artist-card {{cardStyle}} {{isMonitoring ? 'monitoring' : ''}} {{disabled ? 'disabled' : ''}} {{animating ? 'animating' : ''}}"
+      bindtap="onCardTap"
+      bindlongpress="onCardLongPress">
+  
+  <!-- 背景光效 -->
+  <view class="card-glow" wx:if="{{isMonitoring}}"></view>
+  
+  <!-- 卡片内容 -->
+  <view class="card-content">
+    <!-- 头像区域 -->
+    <view class="avatar-section" bindtap="onAvatarTap">
+      <view class="avatar-container">
+        <image class="avatar" 
+               src="{{formattedArtist.avatarUrl}}" 
+               mode="aspectFill"
+               binderror="onAvatarError">
+        </image>
+        
+        <!-- 地区标识 -->
+        <view class="region-badge">
+          <text class="region-text">{{formattedArtist.regionText}}</text>
+        </view>
+        
+        <!-- 在线状态指示器 -->
+        <view class="online-indicator {{isMonitoring ? 'active' : ''}}"></view>
+      </view>
+    </view>
+
+    <!-- 信息区域 -->
+    <view class="info-section">
+      <!-- 基本信息 -->
+      <view class="basic-info">
+        <view class="artist-name">{{formattedArtist.name || '未知歌手'}}</view>
+        <view class="artist-type" wx:if="{{formattedArtist.typeText}}">
+          {{formattedArtist.typeText}}
+        </view>
+      </view>
+
+      <!-- 统计信息 -->
+      <view class="stats-info" wx:if="{{cardStyle !== 'compact'}}">
+        <view class="stat-item">
+          <text class="stat-value">{{formattedArtist.fanCountText}}</text>
+          <text class="stat-label">粉丝</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{formattedArtist.songCountText}}</text>
+          <text class="stat-label">歌曲</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{formattedArtist.albumCountText}}</text>
+          <text class="stat-label">专辑</text>
+        </view>
+      </view>
+
+      <!-- 最后活跃时间 -->
+      <view class="activity-info" wx:if="{{cardStyle !== 'compact'}}">
+        <text class="activity-text">{{formattedArtist.lastActiveText}}</text>
+      </view>
+    </view>
+
+    <!-- 操作区域 -->
+    <view class="action-section" wx:if="{{showSwitch}}">
+      <switch class="monitor-switch"
+              checked="{{isMonitoring}}"
+              disabled="{{disabled}}"
+              bindchange="onSwitchChange"
+              color="#00d4ff">
+      </switch>
+    </view>
+  </view>
+
+  <!-- 监控状态指示 -->
+  <view class="monitor-status" wx:if="{{isMonitoring}}">
+    <view class="status-dot"></view>
+    <text class="status-text">监控中</text>
+  </view>
+
+  <!-- 音乐图标装饰 -->
+  <view class="music-decoration" wx:if="{{isMonitoring}}">
+    <view class="music-note note-1">♪</view>
+    <view class="music-note note-2">♫</view>
+    <view class="music-note note-3">♪</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{animating}}">
+    <view class="loading-spinner"></view>
+  </view>
+</view>

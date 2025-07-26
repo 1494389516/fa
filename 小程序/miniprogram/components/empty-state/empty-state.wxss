@@ -1,0 +1,183 @@
+/* components/empty-state/empty-state.wxss - 空状态组件样式 */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 60rpx;
+  text-align: center;
+  position: relative;
+  min-height: 400rpx;
+}
+
+/* 视觉元素 */
+.empty-visual {
+  margin-bottom: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.empty-image {
+  width: 200rpx;
+  height: 200rpx;
+  opacity: 0.8;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  opacity: 0.6;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+/* 文本内容 */
+.empty-content {
+  margin-bottom: 40rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.empty-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16rpx;
+  opacity: 0.9;
+}
+
+.empty-description {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  opacity: 0.8;
+  max-width: 500rpx;
+}
+
+/* 操作按钮 */
+.empty-action {
+  position: relative;
+  z-index: 2;
+}
+
+.empty-button {
+  min-width: 200rpx;
+  height: 72rpx;
+  font-size: 28rpx;
+  border-radius: var(--border-radius-md);
+}
+
+/* 装饰元素 */
+.empty-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decoration-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  animation: decorationFloat 8s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 150rpx;
+  height: 150rpx;
+  top: 20%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 30%;
+  left: 15%;
+  animation-delay: 2s;
+}
+
+.circle-3 {
+  width: 80rpx;
+  height: 80rpx;
+  top: 60%;
+  right: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes decorationFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20rpx) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 400px) {
+  .empty-state {
+    padding: 60rpx 40rpx;
+    min-height: 300rpx;
+  }
+  
+  .empty-icon {
+    font-size: 100rpx;
+  }
+  
+  .empty-title {
+    font-size: 32rpx;
+  }
+  
+  .empty-description {
+    font-size: 26rpx;
+  }
+}
+
+/* 特定类型的样式调整 */
+.empty-state[data-type="error"] .empty-icon {
+  color: var(--warning-orange);
+  animation: shake 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(4rpx);
+  }
+}
+
+.empty-state[data-type="no-network"] .empty-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.empty-state[data-type="search"] .empty-icon {
+  animation: searchPulse 2s ease-in-out infinite;
+}
+
+@keyframes searchPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}

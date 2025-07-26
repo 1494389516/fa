@@ -1,0 +1,88 @@
+<!-- components/video-item/video-item.wxml - 视频条目组件模板 -->
+<view class="video-item {{itemStyle}} {{isRead ? 'read' : 'unread'}}"
+      bindtap="onVideoTap"
+      bindlongpress="onVideoLongPress">
+  
+  <!-- 未读指示器 -->
+  <view class="unread-indicator" wx:if="{{!isRead}}"></view>
+  
+  <!-- 视频封面 -->
+  <view class="cover-section">
+    <view class="cover-container">
+      <image class="cover-image {{imageLoaded ? 'loaded' : ''}}"
+             src="{{formattedVideo.coverUrl}}"
+             mode="aspectFill"
+             bindload="onCoverLoad"
+             binderror="onCoverError">
+      </image>
+      
+      <!-- 加载占位符 -->
+      <view class="cover-placeholder" wx:if="{{!imageLoaded}}">
+        <view class="placeholder-icon">📺</view>
+      </view>
+      
+      <!-- 时长标签 -->
+      <view class="duration-label" wx:if="{{formattedVideo.durationText}}">
+        {{formattedVideo.durationText}}
+      </view>
+      
+      <!-- 播放按钮 -->
+      <view class="play-button">
+        <view class="play-icon">▶</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content-section">
+    <!-- 标题 -->
+    <view class="title-section">
+      <text class="video-title">{{formattedVideo.titleText}}</text>
+    </view>
+
+    <!-- 博主信息 -->
+    <view class="blogger-section" wx:if="{{showBlogger}}" bindtap="onBloggerTap">
+      <image class="blogger-avatar" 
+             src="{{formattedVideo.bloggerAvatar}}" 
+             mode="aspectFill">
+      </image>
+      <text class="blogger-name">{{formattedVideo.bloggerName}}</text>
+      <view class="verified-icon" wx:if="{{formattedVideo.isVerified}}">✓</view>
+    </view>
+
+    <!-- 发布时间 -->
+    <view class="time-section">
+      <text class="publish-time">{{formattedVideo.publishTimeText}}</text>
+    </view>
+
+    <!-- 统计数据 -->
+    <view class="stats-section" wx:if="{{showStats}}">
+      <view class="stat-item">
+        <view class="stat-icon">👁</view>
+        <text class="stat-text">{{formattedVideo.playCountText}}</text>
+      </view>
+      <view class="stat-item">
+        <view class="stat-icon">❤️</view>
+        <text class="stat-text">{{formattedVideo.likeCountText}}</text>
+      </view>
+      <view class="stat-item">
+        <view class="stat-icon">💬</view>
+        <text class="stat-text">{{formattedVideo.commentCountText}}</text>
+      </view>
+      <view class="stat-item">
+        <view class="stat-icon">📤</view>
+        <text class="stat-text">{{formattedVideo.shareCountText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section" wx:if="{{itemStyle === 'card'}}">
+    <view class="action-button" bindtap="onShareTap">
+      <view class="action-icon">📤</view>
+    </view>
+    <view class="action-button" bindtap="onFavoriteTap">
+      <view class="action-icon">⭐</view>
+    </view>
+  </view>
+</view>

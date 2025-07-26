@@ -1,0 +1,304 @@
+/* components/video-item/video-item.wxss - 视频条目组件样式 */
+
+.video-item {
+  position: relative;
+  display: flex;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  background: var(--card-bg);
+  backdrop-filter: blur(10rpx);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.video-item:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.video-item.unread {
+  border-left: 4rpx solid var(--tech-blue);
+}
+
+.video-item.read {
+  opacity: 0.8;
+}
+
+/* 未读指示器 */
+.unread-indicator {
+  position: absolute;
+  top: 16rpx;
+  left: 16rpx;
+  width: 12rpx;
+  height: 12rpx;
+  background: var(--tech-blue);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+/* 封面区域 */
+.cover-section {
+  margin-right: 24rpx;
+}
+
+.cover-container {
+  position: relative;
+  width: 120rpx;
+  height: 90rpx;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.cover-image.loaded {
+  opacity: 1;
+}
+
+/* 封面占位符 */
+.cover-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.placeholder-icon {
+  font-size: 32rpx;
+  opacity: 0.5;
+}
+
+/* 时长标签 */
+.duration-label {
+  position: absolute;
+  bottom: 8rpx;
+  right: 8rpx;
+  padding: 4rpx 8rpx;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 20rpx;
+  border-radius: 4rpx;
+  backdrop-filter: blur(4rpx);
+}
+
+/* 播放按钮 */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40rpx;
+  height: 40rpx;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4rpx);
+  opacity: 0;
+  transition: all var(--transition-normal);
+}
+
+.video-item:hover .play-button {
+  opacity: 1;
+}
+
+.play-icon {
+  color: white;
+  font-size: 16rpx;
+  margin-left: 2rpx;
+}
+
+/* 内容区域 */
+.content-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+/* 标题区域 */
+.title-section {
+  margin-bottom: 12rpx;
+}
+
+.video-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 博主信息 */
+.blogger-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+  padding: 4rpx 0;
+}
+
+.blogger-avatar {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+  border: 1rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.blogger-name {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-right: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.verified-icon {
+  font-size: 16rpx;
+  color: var(--tech-blue);
+  background: rgba(0, 212, 255, 0.2);
+  padding: 2rpx 6rpx;
+  border-radius: 8rpx;
+}
+
+/* 时间区域 */
+.time-section {
+  margin-bottom: 8rpx;
+}
+
+.publish-time {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* 统计数据 */
+.stats-section {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.stat-icon {
+  font-size: 16rpx;
+  opacity: 0.8;
+}
+
+.stat-text {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 操作区域 */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-left: 16rpx;
+}
+
+.action-button {
+  width: 48rpx;
+  height: 48rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.action-button:active {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.action-icon {
+  font-size: 20rpx;
+}
+
+/* 紧凑样式 */
+.video-item.compact {
+  padding: 16rpx;
+  margin-bottom: 8rpx;
+}
+
+.video-item.compact .cover-container {
+  width: 80rpx;
+  height: 60rpx;
+}
+
+.video-item.compact .video-title {
+  font-size: 26rpx;
+  -webkit-line-clamp: 1;
+}
+
+.video-item.compact .blogger-section {
+  margin-bottom: 4rpx;
+}
+
+.video-item.compact .stats-section {
+  gap: 16rpx;
+}
+
+/* 卡片样式 */
+.video-item.card {
+  flex-direction: column;
+  padding: 0;
+  border-radius: var(--border-radius-lg);
+}
+
+.video-item.card .cover-section {
+  margin-right: 0;
+  margin-bottom: 16rpx;
+}
+
+.video-item.card .cover-container {
+  width: 100%;
+  height: 200rpx;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.video-item.card .content-section {
+  padding: 24rpx;
+}
+
+.video-item.card .action-section {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  flex-direction: row;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8rpx;
+  border-radius: 24rpx;
+  backdrop-filter: blur(10rpx);
+}

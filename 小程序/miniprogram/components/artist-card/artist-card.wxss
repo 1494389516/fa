@@ -1,0 +1,379 @@
+/* components/artist-card/artist-card.wxss - 歌手卡片组件样式 */
+
+.artist-card {
+  position: relative;
+  margin-bottom: 24rpx;
+  background: var(--card-bg);
+  backdrop-filter: blur(10rpx);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.artist-card:active {
+  transform: scale(0.98);
+}
+
+.artist-card.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.artist-card.monitoring {
+  border-color: #ff6b35; /* 音乐主题橙色 */
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+}
+
+.artist-card.animating {
+  transform: scale(1.02);
+}
+
+/* 背景光效 */
+.card-glow {
+  position: absolute;
+  top: -2rpx;
+  left: -2rpx;
+  right: -2rpx;
+  bottom: -2rpx;
+  background: linear-gradient(135deg, #ff6b35, transparent, #ff6b35);
+  border-radius: var(--border-radius-md);
+  opacity: 0.3;
+  animation: musicGlow 2s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes musicGlow {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* 卡片内容 */
+.card-content {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  position: relative;
+}
+
+/* 头像区域 */
+.avatar-section {
+  margin-right: 32rpx;
+}
+
+.avatar-container {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-normal);
+}
+
+.artist-card.monitoring .avatar {
+  border-color: #ff6b35;
+  box-shadow: 0 0 16rpx rgba(255, 107, 53, 0.4);
+}
+
+/* 地区标识 */
+.region-badge {
+  position: absolute;
+  bottom: -4rpx;
+  right: -4rpx;
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  border-radius: 12rpx;
+  padding: 2rpx 8rpx;
+  border: 2rpx solid var(--primary-gradient);
+}
+
+.region-text {
+  font-size: 16rpx;
+  color: white;
+  font-weight: 500;
+}
+
+/* 在线状态指示器 */
+.online-indicator {
+  position: absolute;
+  top: -2rpx;
+  right: -2rpx;
+  width: 20rpx;
+  height: 20rpx;
+  background: #666;
+  border-radius: 50%;
+  border: 3rpx solid var(--primary-gradient);
+  transition: all var(--transition-normal);
+}
+
+.online-indicator.active {
+  background: #ff6b35;
+  animation: musicPulse 2s ease-in-out infinite;
+}
+
+@keyframes musicPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* 信息区域 */
+.info-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.basic-info {
+  margin-bottom: 16rpx;
+}
+
+.artist-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artist-type {
+  font-size: 22rpx;
+  color: #ff6b35;
+  background: rgba(255, 107, 53, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+  font-weight: 500;
+}
+
+/* 统计信息 */
+.stats-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60rpx;
+}
+
+.stat-value {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #ff6b35;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 20rpx;
+  color: var(--text-secondary);
+  margin-top: 4rpx;
+}
+
+.stat-divider {
+  width: 1rpx;
+  height: 32rpx;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 活跃信息 */
+.activity-info {
+  margin-top: 8rpx;
+}
+
+.activity-text {
+  font-size: 22rpx;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* 操作区域 */
+.action-section {
+  margin-left: 24rpx;
+}
+
+.monitor-switch {
+  transform: scale(0.8);
+}
+
+/* 监控状态指示 */
+.monitor-status {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 16rpx;
+  background: rgba(255, 107, 53, 0.2);
+  border-radius: 20rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.status-dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #ff6b35;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-text {
+  font-size: 20rpx;
+  color: #ff6b35;
+  font-weight: 500;
+}
+
+/* 音乐图标装饰 */
+.music-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.music-note {
+  position: absolute;
+  color: rgba(255, 107, 53, 0.3);
+  font-size: 24rpx;
+  animation: musicFloat 4s ease-in-out infinite;
+}
+
+.note-1 {
+  top: 20%;
+  right: 15%;
+  animation-delay: 0s;
+}
+
+.note-2 {
+  top: 60%;
+  right: 25%;
+  animation-delay: 1.5s;
+  font-size: 20rpx;
+}
+
+.note-3 {
+  top: 40%;
+  right: 8%;
+  animation-delay: 3s;
+  font-size: 18rpx;
+}
+
+@keyframes musicFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-10rpx) rotate(10deg);
+    opacity: 0.6;
+  }
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+}
+
+.loading-spinner {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ff6b35;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 紧凑样式 */
+.artist-card.compact .card-content {
+  padding: 24rpx;
+}
+
+.artist-card.compact .avatar-container {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.artist-card.compact .artist-name {
+  font-size: 28rpx;
+}
+
+.artist-card.compact .artist-type {
+  font-size: 20rpx;
+}
+
+/* 详细样式 */
+.artist-card.detailed .card-content {
+  padding: 40rpx;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.artist-card.detailed .avatar-section {
+  margin-right: 0;
+  margin-bottom: 24rpx;
+  align-self: center;
+}
+
+.artist-card.detailed .avatar-container {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.artist-card.detailed .info-section {
+  width: 100%;
+  text-align: center;
+}
+
+.artist-card.detailed .artist-name {
+  font-size: 36rpx;
+  text-align: center;
+}
+
+.artist-card.detailed .stats-info {
+  justify-content: center;
+  gap: 32rpx;
+}
+
+.artist-card.detailed .action-section {
+  margin-left: 0;
+  margin-top: 24rpx;
+  align-self: center;
+}

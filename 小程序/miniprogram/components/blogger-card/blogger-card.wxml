@@ -1,0 +1,171 @@
+<!-- components/blogger-card/blogger-card.wxml - 博主卡片组件模板 -->
+<view class="blogger-card {{cardStyle}} {{isMonitoring ? 'monitoring' : ''}} {{disabled ? 'disabled' : ''}} {{animating ? 'animating' : ''}} {{hovering ? 'hovering' : ''}}"
+      animation="{{cardAnimation}}"
+      bindtouchstart="onCardTouchStart"
+      bindtouchend="onCardTouchEnd"
+      bindtap="onCardTap"
+      bindlongpress="onCardLongPress">
+  
+  <!-- 背景光效 -->
+  <view class="card-glow" wx:if="{{isMonitoring}}">
+    <view class="glow-ring"></view>
+    <view class="glow-pulse"></view>
+  </view>
+  
+  <!-- 科技边框 -->
+  <view class="tech-border">
+    <view class="border-corner corner-tl"></view>
+    <view class="border-corner corner-tr"></view>
+    <view class="border-corner corner-bl"></view>
+    <view class="border-corner corner-br"></view>
+    <view class="border-line line-top"></view>
+    <view class="border-line line-right"></view>
+    <view class="border-line line-bottom"></view>
+    <view class="border-line line-left"></view>
+  </view>
+  
+  <!-- 卡片内容 -->
+  <view class="card-content">
+    <!-- 头像区域 -->
+    <view class="avatar-section" bindtap="onAvatarTap">
+      <view class="avatar-container" animation="{{avatarAnimation}}">
+        <!-- 头像光环 -->
+        <view class="avatar-ring {{isMonitoring ? 'active' : ''}}"></view>
+        
+        <image class="avatar" 
+               src="{{formattedBlogger.avatarUrl}}" 
+               mode="aspectFill"
+               binderror="onAvatarError">
+        </image>
+        
+        <!-- 认证标识 -->
+        <view class="verified-badge" wx:if="{{formattedBlogger.isVerifiedUser}}">
+          <text class="verified-icon">✓</text>
+        </view>
+        
+        <!-- 在线状态指示器 -->
+        <view class="online-indicator {{onlineStatus}}" wx:if="{{showOnlineStatus}}">
+          <view class="indicator-dot"></view>
+          <view class="indicator-pulse"></view>
+        </view>
+
+        <!-- 活跃度指示器 -->
+        <view class="activity-indicator" wx:if="{{showStats}}">
+          <view class="activity-bar" wx:for="{{[1,2,3,4,5]}}" wx:key="*this"
+                style="background: {{item <= getActivityLevel() ? getActivityColor() : 'rgba(255,255,255,0.1)'}}">
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 信息区域 -->
+    <view class="info-section">
+      <!-- 基本信息 -->
+      <view class="basic-info">
+        <view class="nickname-container">
+          <text class="nickname">{{formattedBlogger.nickname || '未知用户'}}</text>
+          <view class="nickname-glow" wx:if="{{isMonitoring}}"></view>
+        </view>
+        
+        <view class="signature" wx:if="{{formattedBlogger.signature}}">
+          {{formattedBlogger.signature}}
+        </view>
+
+        <!-- 在线状态文本 -->
+        <view class="online-status-text {{onlineStatus}}" wx:if="{{showOnlineStatus && cardStyle !== 'compact'}}">
+          <text class="status-dot">●</text>
+          <text class="status-text">{{getOnlineStatusText()}}</text>
+        </view>
+      </view>
+
+      <!-- 统计信息 -->
+      <view class="stats-info" wx:if="{{showStats && cardStyle !== 'compact'}}">
+        <view class="stats-grid">
+          <view class="stat-item">
+            <view class="stat-icon">👥</view>
+            <view class="stat-content">
+              <text class="stat-value">{{formattedBlogger.followerCountText}}</text>
+              <text class="stat-label">粉丝</text>
+            </view>
+          </view>
+          
+          <view class="stat-divider"></view>
+          
+          <view class="stat-item">
+            <view class="stat-icon">📺</view>
+            <view class="stat-content">
+              <text class="stat-value">{{formattedBlogger.videoCountText}}</text>
+              <text class="stat-label">作品</text>
+            </view>
+          </view>
+          
+          <view class="stat-divider"></view>
+          
+          <view class="stat-item">
+            <view class="stat-icon">⏰</view>
+            <view class="stat-content">
+              <text class="stat-label last-active">{{formattedBlogger.lastActiveText}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 数据可视化条 -->
+        <view class="data-bars" wx:if="{{cardStyle === 'detailed'}}">
+          <view class="data-bar">
+            <view class="bar-label">活跃度</view>
+            <view class="bar-track">
+              <view class="bar-fill" style="width: {{getActivityLevel() * 20}}%; background: {{getActivityColor()}}"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作区域 -->
+    <view class="action-section" wx:if="{{showSwitch}}">
+      <view class="switch-container">
+        <view class="switch-label">监控</view>
+        <view class="tech-switch {{isMonitoring ? 'active' : ''}} {{disabled ? 'disabled' : ''}}"
+              bindtap="onSwitchChange">
+          <view class="switch-track">
+            <view class="switch-thumb">
+              <view class="thumb-glow"></view>
+            </view>
+          </view>
+          <view class="switch-indicator">
+            <text class="indicator-text">{{isMonitoring ? 'ON' : 'OFF'}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 监控状态指示 -->
+  <view class="monitor-status" wx:if="{{isMonitoring}}">
+    <view class="status-indicator">
+      <view class="status-dot"></view>
+      <view class="status-pulse"></view>
+    </view>
+    <text class="status-text">监控中</text>
+    <view class="status-wave"></view>
+  </view>
+
+  <!-- 数据流动效果 -->
+  <view class="data-flow" wx:if="{{isMonitoring}}">
+    <view class="flow-particle" wx:for="{{[1,2,3]}}" wx:key="*this"></view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-overlay" wx:if="{{animating}}">
+    <view class="loading-spinner">
+      <view class="spinner-ring"></view>
+      <view class="spinner-dot"></view>
+    </view>
+    <text class="loading-text">处理中...</text>
+  </view>
+
+  <!-- 悬停效果 -->
+  <view class="hover-effect" wx:if="{{hovering}}">
+    <view class="hover-glow"></view>
+  </view>
+</view>

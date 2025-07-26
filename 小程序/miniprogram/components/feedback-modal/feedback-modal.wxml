@@ -1,0 +1,91 @@
+<!--components/feedback-modal/feedback-modal.wxml-->
+<view class="feedback-modal {{show ? 'show' : ''}}" wx:if="{{show}}" bindtouchmove="onTouchMove">
+  <!-- 遮罩层 -->
+  <view class="modal-mask" bindtap="onClose"></view>
+  
+  <!-- 模态框内容 -->
+  <view class="modal-content">
+    <!-- 头部 -->
+    <view class="modal-header">
+      <text class="modal-title">意见反馈</text>
+      <view class="close-btn" bindtap="onClose">
+        <text class="iconfont icon-close"></text>
+      </view>
+    </view>
+    
+    <!-- 表单内容 -->
+    <view class="modal-body">
+      <!-- 反馈类型 -->
+      <view class="form-group">
+        <text class="form-label">反馈类型</text>
+        <picker 
+          mode="selector" 
+          range="{{feedbackTypes}}" 
+          range-key="label"
+          bindchange="onTypeChange"
+        >
+          <view class="picker-input">
+            <text>{{feedbackTypes[0].label}}</text>
+            <text class="iconfont icon-arrow-down"></text>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 反馈标题 -->
+      <view class="form-group">
+        <view class="form-label-row">
+          <text class="form-label">反馈标题</text>
+          <text class="char-count">{{titleCount}}/100</text>
+        </view>
+        <input 
+          class="form-input"
+          placeholder="请简要描述问题或建议"
+          value="{{formData.title}}"
+          maxlength="100"
+          bindinput="onTitleInput"
+        />
+      </view>
+
+      <!-- 反馈内容 -->
+      <view class="form-group">
+        <view class="form-label-row">
+          <text class="form-label">详细描述</text>
+          <text class="char-count">{{contentCount}}/1000</text>
+        </view>
+        <textarea 
+          class="form-textarea"
+          placeholder="请详细描述遇到的问题或您的建议，我们会认真对待每一条反馈"
+          value="{{formData.content}}"
+          maxlength="1000"
+          bindinput="onContentInput"
+          auto-height
+        />
+      </view>
+
+      <!-- 联系方式 -->
+      <view class="form-group">
+        <text class="form-label">联系方式（可选）</text>
+        <input 
+          class="form-input"
+          placeholder="请输入邮箱地址，方便我们与您联系"
+          value="{{formData.contact}}"
+          bindinput="onContactInput"
+        />
+        <text class="form-hint">我们承诺不会将您的联系方式用于其他用途</text>
+      </view>
+    </view>
+    
+    <!-- 底部按钮 -->
+    <view class="modal-footer">
+      <button class="cancel-btn" bindtap="onClose">取消</button>
+      <button 
+        class="submit-btn" 
+        bindtap="onSubmit"
+        disabled="{{submitting}}"
+        loading="{{submitting}}"
+      >
+        {{submitting ? '提交中...' : '提交反馈'}}
+      </button>
+    </view>
+  </view>
+</view>

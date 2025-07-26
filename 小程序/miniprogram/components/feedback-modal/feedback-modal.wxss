@@ -1,0 +1,299 @@
+/* components/feedback-modal/feedback-modal.wxss */
+
+.feedback-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.feedback-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10rpx);
+}
+
+.modal-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 24rpx 24rpx 0 0;
+  max-height: 80vh;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.feedback-modal.show .modal-content {
+  transform: translateY(0);
+}
+
+/* 头部 */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-btn {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f5f5f5;
+}
+
+.close-btn .iconfont {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 表单内容 */
+.modal-body {
+  padding: 30rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 32rpx;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.form-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.char-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.picker-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.picker-input .iconfont {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.form-input {
+  width: 100%;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+  line-height: 1.5;
+}
+
+.form-textarea::placeholder {
+  color: #999;
+}
+
+.form-hint {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  line-height: 1.4;
+}
+
+/* 底部按钮 */
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.cancel-btn,
+.submit-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  color: #999;
+}
+
+.submit-btn::after {
+  border: none;
+}
+
+.cancel-btn::after {
+  border: none;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .modal-content {
+    max-height: 85vh;
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 24rpx;
+  }
+  
+  .modal-title {
+    font-size: 30rpx;
+  }
+  
+  .form-input,
+  .form-textarea,
+  .picker-input {
+    padding: 20rpx;
+    font-size: 26rpx;
+  }
+  
+  .form-textarea {
+    min-height: 160rpx;
+  }
+  
+  .cancel-btn,
+  .submit-btn {
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 26rpx;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background: #2a2a2a;
+    border-top: 1rpx solid #333;
+  }
+  
+  .modal-header {
+    border-bottom-color: #333;
+  }
+  
+  .modal-title {
+    color: white;
+  }
+  
+  .close-btn {
+    background: #333;
+  }
+  
+  .close-btn .iconfont {
+    color: #adb5bd;
+  }
+  
+  .form-label {
+    color: white;
+  }
+  
+  .char-count {
+    color: #6c757d;
+  }
+  
+  .picker-input,
+  .form-input,
+  .form-textarea {
+    background: #333;
+    color: white;
+  }
+  
+  .picker-input::placeholder,
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: #6c757d;
+  }
+  
+  .form-hint {
+    color: #6c757d;
+  }
+  
+  .modal-footer {
+    border-top-color: #333;
+  }
+  
+  .cancel-btn {
+    background: #333;
+    color: #adb5bd;
+  }
+}

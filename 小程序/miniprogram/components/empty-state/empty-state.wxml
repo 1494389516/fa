@@ -1,0 +1,45 @@
+<!-- components/empty-state/empty-state.wxml - 空状态组件模板 -->
+<view class="empty-state" bindtap="onEmptyTap">
+  <!-- 图片或图标 -->
+  <view class="empty-visual">
+    <!-- 自定义图片 -->
+    <image class="empty-image" 
+           wx:if="{{imageUrl}}"
+           src="{{imageUrl}}" 
+           mode="aspectFit"
+           binderror="onImageError">
+    </image>
+    
+    <!-- 图标 -->
+    <view class="empty-icon" wx:else>
+      {{finalIcon}}
+    </view>
+  </view>
+
+  <!-- 文本内容 -->
+  <view class="empty-content">
+    <!-- 标题 -->
+    <view class="empty-title" wx:if="{{finalTitle}}">
+      {{finalTitle}}
+    </view>
+    
+    <!-- 描述 -->
+    <view class="empty-description" wx:if="{{finalDescription}}">
+      {{finalDescription}}
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="empty-action" wx:if="{{showButton && buttonText}}">
+    <button class="btn btn-primary empty-button" bindtap="onButtonTap">
+      {{buttonText}}
+    </button>
+  </view>
+
+  <!-- 装饰元素 -->
+  <view class="empty-decoration">
+    <view class="decoration-circle circle-1"></view>
+    <view class="decoration-circle circle-2"></view>
+    <view class="decoration-circle circle-3"></view>
+  </view>
+</view>

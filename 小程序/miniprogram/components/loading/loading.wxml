@@ -1,0 +1,35 @@
+<!-- components/loading/loading.wxml - 加载动画组件模板 -->
+<view class="loading-container {{fullscreen ? 'fullscreen' : ''}} {{show ? 'show' : 'hide'}}"
+      bindtap="onMaskTap">
+  
+  <view class="loading-content {{size}}">
+    <!-- 旋转加载器 -->
+    <view class="spinner-loader {{size}}" wx:if="{{type === 'spinner'}}" style="border-top-color: {{color}};">
+    </view>
+
+    <!-- 点状加载器 -->
+    <view class="dots-loader {{size}}" wx:elif="{{type === 'dots'}}">
+      <view class="dot" style="background-color: {{color}};"></view>
+      <view class="dot" style="background-color: {{color}};"></view>
+      <view class="dot" style="background-color: {{color}};"></view>
+    </view>
+
+    <!-- 波浪加载器 -->
+    <view class="wave-loader {{size}}" wx:elif="{{type === 'wave'}}">
+      <view class="wave-bar" style="background-color: {{color}};"></view>
+      <view class="wave-bar" style="background-color: {{color}};"></view>
+      <view class="wave-bar" style="background-color: {{color}};"></view>
+      <view class="wave-bar" style="background-color: {{color}};"></view>
+      <view class="wave-bar" style="background-color: {{color}};"></view>
+    </view>
+
+    <!-- 脉冲加载器 -->
+    <view class="pulse-loader {{size}}" wx:elif="{{type === 'pulse'}}" style="background-color: {{color}};">
+    </view>
+
+    <!-- 加载文本 -->
+    <view class="loading-text" wx:if="{{text}}" style="color: {{color}};">
+      {{text}}
+    </view>
+  </view>
+</view>
