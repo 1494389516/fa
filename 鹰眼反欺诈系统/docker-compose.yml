@@ -1,0 +1,76 @@
+version: '3.8'
+
+# 🦅 鹰眼反欺诈系统 - 极简版配置
+# 只包含核心服务，快速启动
+
+services:
+  # Redis缓存
+  redis:
+    image: redis:7-alpine
+    container_name: fraud-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+  # Python核心引擎（含GNN+7层防御+VPN检测+设备指纹）
+  python-engine:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.python
+    container_name: fraud-python-engine
+    depends_on:
+      - redis
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./core:/app/core
+      - ./config:/app/config
+      - ./models:/app/models
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+  # Go API网关（高并发+限流+熔断）
+  go-gateway:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.go
+    container_name: fraud-go-gateway
+    depends_on:
+      - redis
+      - python-engine
+    ports:
+      - "8080:8080"
+    environment:
+      REDIS_ADDR: redis:6379
+      PYTHON_API_URL: http://python-engine:5000
+      GATEWAY_PORT: "8080"
+      MAX_QPS: "5000"
+      TIMEOUT_MS: "100"
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+  # 前端界面
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fraud-frontend
+    depends_on:
+      - go-gateway
+    ports:
+      - "3000:80"
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+networks:
+  fraud-net:
+    driver: bridge

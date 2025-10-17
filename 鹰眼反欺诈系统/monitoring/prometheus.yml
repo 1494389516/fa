@@ -1,0 +1,61 @@
+# Prometheus配置文件
+# 实时反欺诈监控系统
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'fraud-detection'
+    environment: 'production'
+
+# 告警管理器配置
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # - 'alertmanager:9093'
+
+# 规则文件
+rule_files:
+  # - "alert_rules.yml"
+
+# 抓取配置
+scrape_configs:
+  # Go API 网关
+  - job_name: 'go-gateway'
+    static_configs:
+      - targets: ['go-gateway:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # Rust 实时检测器
+  - job_name: 'rust-detector'
+    static_configs:
+      - targets: ['rust-detector:3030']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # Prometheus 自身
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # PostgreSQL Exporter（如果启用）
+  - job_name: 'postgres'
+    static_configs:
+      - targets: []
+        # - 'postgres-exporter:9187'
+
+  # Redis Exporter（如果启用）
+  - job_name: 'redis'
+    static_configs:
+      - targets: []
+        # - 'redis-exporter:9121'
+
+  # Node Exporter（系统指标）
+  - job_name: 'node'
+    static_configs:
+      - targets: []
+        # - 'node-exporter:9100'
+

@@ -1,0 +1,188 @@
+# 实时反欺诈机器人系统配置
+
+system:
+  name: "实时反欺诈机器人"
+  version: "1.0.0"
+  environment: "production"
+  debug: false
+
+# 检测引擎配置
+detection:
+  # 风险阈值
+  threshold:
+    low: 0.3
+    medium: 0.6
+    high: 0.85
+  
+  # 模型配置
+  model:
+    gnn_model: "models/gnn_detector.pt"
+    onnx_model: "models/gnn_model.onnx"
+    feature_dim: 32
+    hidden_dim: 64
+    output_dim: 2
+  
+  # 7层防御配置
+  defense:
+    enable_all_layers: true
+    layers:
+      - id: 1
+        name: "数据清洗"
+        enabled: true
+      - id: 2
+        name: "对抗训练"
+        enabled: true
+      - id: 3
+        name: "动态重训练"
+        enabled: true
+      - id: 4
+        name: "实时监控"
+        enabled: true
+      - id: 5
+        name: "提高成本"
+        enabled: true
+      - id: 6
+        name: "降低收益"
+        enabled: true
+      - id: 7
+        name: "法律威慑"
+        enabled: true
+
+# 性能配置
+performance:
+  max_qps: 100000
+  timeout_ms: 5
+  workers: 16
+  batch_size: 64
+  cache_ttl: 3600
+
+# 数据库配置
+database:
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: ""
+    max_connections: 100
+  
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "frauddb"
+    user: "postgres"
+    password: "postgres"
+    pool_size: 20
+
+# 消息队列配置
+kafka:
+  bootstrap_servers:
+    - "localhost:9092"
+  topics:
+    detection_requests: "fraud_detection_requests"
+    detection_results: "fraud_detection_results"
+    alerts: "fraud_alerts"
+  consumer_group: "fraud_detection_group"
+
+# API网关配置
+gateway:
+  port: 8080
+  host: "0.0.0.0"
+  rate_limit:
+    enabled: true
+    max_requests: 1000
+    window_seconds: 60
+  cors:
+    enabled: true
+    origins: ["*"]
+  
+# Rust检测器配置
+rust_detector:
+  port: 3030
+  host: "0.0.0.0"
+  onnx_runtime:
+    inter_op_threads: 4
+    intra_op_threads: 4
+
+# C++特征提取配置
+cpp_features:
+  num_threads: 4
+  enable_simd: true
+  batch_processing: true
+
+# 前端配置
+frontend:
+  port: 3000
+  api_endpoint: "http://localhost:8080"
+  websocket_endpoint: "ws://localhost:8080/ws"
+
+# 监控配置
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+  
+  metrics:
+    - name: "requests_total"
+      type: "counter"
+    - name: "fraud_detected_total"
+      type: "counter"
+    - name: "response_time_seconds"
+      type: "histogram"
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/fraud_detection.log"
+  rotation: "100 MB"
+  retention: "30 days"
+
+# 规则配置
+rules:
+  # IP黑名单
+  ip_blacklist:
+    enabled: true
+    file: "config/ip_blacklist.txt"
+  
+  # 设备指纹
+  device_fingerprint:
+    enabled: true
+    suspicious_threshold: 10
+  
+  # 时间窗口
+  time_window:
+    high_frequency_seconds: 60
+    max_operations: 100
+  
+  # 金额阈值
+  amount_threshold:
+    suspicious: 1000.0
+    critical: 10000.0
+
+# 经济防御参数
+economic_defense:
+  # 成本提升
+  cost_increase:
+    captcha_threshold: 60  # 信用分低于60要求验证码
+    phone_verify_threshold: 40
+    id_verify_threshold: 20
+  
+  # 收益降低
+  profit_decrease:
+    rank_penalty_threshold: 0.7  # 风险分高于0.7降权
+    delay_hours: 24
+    exposure_limit: 1000
+
+# 机器学习配置
+ml:
+  training:
+    enabled: true
+    interval_hours: 24
+    min_samples: 1000
+    test_split: 0.2
+    
+  online_learning:
+    enabled: true
+    update_frequency: 3600  # 每小时
+    learning_rate: 0.001
+

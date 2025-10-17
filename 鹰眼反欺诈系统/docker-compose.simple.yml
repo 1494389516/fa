@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: fraud-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    networks:
+      - fraud-net
+
+  # Python 核心引擎
+  python-engine:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.python
+    container_name: fraud-python-engine
+    depends_on:
+      - redis
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./core:/app/core
+      - ./config:/app/config
+    environment:
+      REDIS_HOST: redis
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+  # Go API 网关
+  go-gateway:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.go
+    container_name: fraud-go-gateway
+    depends_on:
+      - redis
+      - python-engine
+    ports:
+      - "8080:8080"
+    environment:
+      REDIS_ADDR: redis:6379
+      PYTHON_API_URL: http://python-engine:5000
+      RUST_API_URL: http://rust-detector:3030
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+  # 前端
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: fraud-frontend
+    depends_on:
+      - go-gateway
+    ports:
+      - "3000:80"
+    networks:
+      - fraud-net
+    restart: unless-stopped
+
+networks:
+  fraud-net:
+    driver: bridge
+

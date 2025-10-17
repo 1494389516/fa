@@ -1,0 +1,571 @@
+/* ==================== 基础样式 ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #06071f;
+  color: rgba(255, 255, 255, 0.9);
+  min-height: 100vh;
+}
+
+.dashboard-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 15%, rgba(236, 72, 153, 0.16), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.12), transparent 55%),
+    linear-gradient(135deg, #050716 0%, #0b0f26 45%, #040512 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-layout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.06), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dashboard-content {
+  padding: 40px 36px 48px 36px;
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ==================== 头部动画 ==================== */
+.animated-header {
+  animation: slideDown 0.5s ease-out;
+}
+
+.glass-header {
+  background: rgba(28, 32, 68, 0.85) !important;
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 0 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 12px 40px rgba(6, 7, 31, 0.35) !important;
+  position: sticky !important;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-left h1 {
+  color: #fff;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  line-height: 1.3;
+}
+
+.header-left .subtitle {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 11px;
+  margin-top: 2px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.system-status {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(82, 196, 26, 0.15);
+  border: 1px solid rgba(82, 196, 26, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.system-status:hover {
+  background: rgba(82, 196, 26, 0.25);
+  border-color: rgba(82, 196, 26, 0.5);
+  box-shadow: 0 0 20px rgba(82, 196, 26, 0.3);
+}
+
+.tech-badge {
+  padding: 8px 20px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-badge::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(99, 102, 241, 0.3),
+    transparent
+  );
+  animation: scan 3s infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.tech-badge:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* 技术栈区域 - 科技风格 */
+.tech-stack-section {
+  padding: 32px 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.header-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99, 102, 241, 0.6),
+    transparent
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.header-line::before {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100px; }
+  100% { left: 100%; }
+}
+
+.header-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+.tech-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(118, 75, 162, 0.2));
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 12px 0;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1px;
+}
+
+.header-right .ant-badge-status-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.logo-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+  font-size: 32px;
+  color: white;
+}
+
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ==================== 统计卡片样式 ==================== */
+.stat-card {
+  border-radius: 18px;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 40px rgba(6, 7, 31, 0.4);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  z-index: -1;
+}
+
+.gradient-card-1 {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+}
+
+.gradient-card-2 {
+  background: linear-gradient(135deg, #f472b6 0%, #fb7185 100%);
+  color: white;
+}
+
+.gradient-card-3 {
+  background: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+  color: white;
+}
+
+.gradient-card-4 {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  color: white;
+}
+
+.hover-lift {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 26px 60px rgba(99, 102, 241, 0.35);
+}
+
+.stat-icon-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.stat-icon {
+  font-size: 28px;
+  color: white;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.stat-title {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.18);
+}
+
+.stat-trend {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-trend.success {
+  color: #52c41a;
+}
+
+.stat-trend.warning {
+  color: #faad14;
+}
+
+/* ==================== 玻璃卡片效果 ==================== */
+
+.glass-card {
+  background: rgba(16, 19, 49, 0.75) !important;
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 20px 60px rgba(15, 18, 45, 0.45) !important;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 80px rgba(99, 102, 241, 0.35) !important;
+}
+
+.glass-card .ant-card-head {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.25) !important;
+}
+
+.card-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-title svg {
+  font-size: 22px;
+  color: #a855f7;
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.45));
+}
+
+/* ==================== 表格样式 ==================== */
+.custom-table .ant-table {
+  background: transparent !important;
+  color: #fff;
+}
+
+.custom-table .ant-table-thead > tr > th {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
+  font-weight: 600;
+}
+
+.custom-table .ant-table-tbody > tr {
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.custom-table .ant-table-tbody > tr:hover {
+  background: rgba(102, 126, 234, 0.2) !important;
+  transform: scale(1.01);
+}
+
+.custom-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ==================== 技术卡片 ==================== */
+.tech-card {
+  padding: 28px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  height: 100%;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.hover-float {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-float:hover {
+  transform: translateY(-14px) scale(1.06);
+  box-shadow: 0 30px 80px rgba(99, 102, 241, 0.45);
+}
+
+.tech-icon {
+  font-size: 68px;
+  margin-bottom: 16px;
+  animation: bounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.25));
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.tech-card h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 16px 0 8px 0;
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(99, 102, 241, 0.25);
+  border-radius: 999px;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 18px;
+  border: 1px solid rgba(129, 140, 248, 0.6);
+}
+
+.tech-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.tech-card ul li {
+  color: rgba(255, 255, 255, 0.88);
+  padding: 8px 0;
+  font-size: 15px;
+}
+
+.tech-card ul li svg {
+  color: #52c41a;
+  margin-right: 8px;
+}
+
+.tech-version {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 16px;
+  background: rgba(15, 18, 45, 0.75);
+  border-radius: 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Courier New', monospace;
+  border: 1px solid rgba(129, 140, 248, 0.4);
+}
+
+.python-card:hover::before {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(129, 140, 248, 0.15) 100%);
+}
+
+.go-card:hover::before {
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.28) 0%, rgba(56, 189, 248, 0.12) 100%);
+}
+
+.rust-card:hover::before {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.28) 0%, rgba(251, 191, 36, 0.12) 100%);
+}
+
+.cpp-card:hover::before {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.28) 0%, rgba(14, 165, 233, 0.12) 100%);
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 768px) {
+  .stat-card {
+    margin-bottom: 16px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+  }
+  
+  .tech-card {
+    margin-bottom: 16px;
+  }
+}
+

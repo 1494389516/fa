@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="鹰眼反欺诈系统 FraudHawk - 多语言混合架构 | 毫秒级响应 | 图对抗算法" />
+    <title>🦅 鹰眼反欺诈系统 - FraudHawk</title>
+    <style>
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* 加载动画 */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      
+      .loading-icon {
+        width: 80px;
+        height: 80px;
+        border: 4px solid rgba(102, 126, 234, 0.2);
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      .loading-text {
+        margin-top: 24px;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>您需要启用 JavaScript 才能运行此应用。</noscript>
+    <div id="root">
+      <div class="loading-screen">
+        <div class="loading-icon"></div>
+        <div class="loading-text">🦅 鹰眼系统加载中...</div>
+      </div>
+    </div>
+    <script type="module" src="/src/index.jsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+# Python 依赖包 - 精简版
+# 实时反欺诈检测引擎（无GPU依赖）
+
+# 数据处理
+numpy>=1.24.0
+pandas>=2.0.0
+
+# 数据库
+redis>=4.5.0
+psycopg2-binary>=2.9.0
+
+# 消息队列
+kafka-python>=2.0.2
+
+# Web框架
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+
+# 配置和工具
+pydantic>=2.0.0
+pyyaml>=6.0
+
+# 日志（简化）
+loguru>=0.7.0
