@@ -1,0 +1,376 @@
+//
+//  InteractionComponents.swift
+//  qq
+//
+//  Created by mac on 2025/11/29.
+//
+
+import SwiftUI
+
+// MARK: - 可拖动的卡片
+struct DraggableCard<Content: View>: View {
+    let content: Content
+    @State private var offset: CGSize = .zero
+    @State private var isDragging = false
+    @State private var scale: CGFloat = 1.0
+    let onSwipe: (SwipeDirection) -> Void
+
+    enum SwipeDirection {
+        case left, right
+    }
+
+    init(direction: SwipeDirection = .left, @ViewBuilder content: () -> Content, onSwipe: @escaping (SwipeDirection) -> Void) {
+        self.content = content()
+        self.onSwipe = onSwipe
+    }
+
+    var body: some View {
+        content
+            .scaleEffect(scale)
+            .offset(offset)
+            .rotationEffect(.degrees(offset.width / 20))
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        withAnimation(.spring(response: 0.3)) {
+                            offset = value.translation
+                            isDragging = true
+                        }
+                    }
+                    .onEnded { value in
+                        let threshold: CGFloat = 100
+
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                            if abs(value.translation.x) > threshold {
+                                let direction: SwipeDirection = value.translation.x > 0 ? .right : .left
+                                onSwipe(direction)
+                                offset = CGSize(width: direction == .right ? 500 : -500, height: value.translation.height)
+                                scale = 0.8
+                            } else {
+                                offset = .zero
+                                scale = 1.0
+                            }
+                            isDragging = false
+                        }
+                    }
+            )
+            .shadow(
+                color: isDragging ? .black.opacity(0.2) : .clear,
+                radius: isDragging ? 10 : 0,
+                x: isDragging ? 5 : 0,
+                y: isDragging ? 5 : 0
+            )
+    }
+}
+
+// MARK: - 弹跳按钮
+struct BouncingButton: View {
+    let title: String
+    let icon: String
+    let action: () -> Void
+    @State private var isPressed = false
+
+    var body: some View {
+        Button(action: {
+            action()
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                isPressed.toggle()
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                    isPressed.toggle()
+                }
+            }
+        }) {
+            HStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.headline)
+                Text(title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 25)
+                    .fill(
+                        LinearGradient(
+                            colors: [.blue, .blue.opacity(0.8)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            )
+            .scaleEffect(isPressed ? 0.95 : 1.0)
+            .shadow(
+                color: .blue.opacity(0.3),
+                radius: isPressed ? 5 : 10,
+                x: 0,
+                y: isPressed ? 2 : 5
+            )
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
+
+// MARK: - 涟漪效果按钮
+struct RippleButton: View {
+    let title: String
+    let action: () -> Void
+    @State private var ripple = false
+
+    var body: some View {
+        Button(action: {
+            action()
+            withAnimation(.easeOut(duration: 0.6)) {
+                ripple.toggle()
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                ripple.toggle()
+            }
+        }) {
+            ZStack {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+                    .padding()
+                    .background(Capsule().fill(Color.blue.opacity(0.1)))
+
+                Circle()
+                    .fill(Color.blue.opacity(0.3))
+                    .scaleEffect(ripple ? 1.5 : 0)
+                    .opacity(ripple ? 0 : 1)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+        .clipped()
+    }
+}
+
+// MARK: - 滑动删除操作
+struct SwipeToDeleteContainer<Content: View>: View {
+    let content: Content
+    let onDelete: () -> Void
+    @State private var offset: CGSize = .zero
+    @State private var showingDelete = false
+
+    init(onDelete: @escaping () -> Void, @ViewBuilder content: () -> Content) {
+        self.onDelete = onDelete
+        self.content = content()
+    }
+
+    var body: some View {
+        ZStack {
+            // 删除按钮背景
+            HStack {
+                Spacer()
+                Button(action: onDelete) {
+                    VStack {
+                        Image(systemName: "trash.fill")
+                        Text("删除")
+                    }
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding()
+                }
+                .background(Color.red)
+                .frame(width: showingDelete ? 80 : 0)
+            }
+
+            // 主要内容
+            content
+                .offset(offset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if value.translation.width < 0 {
+                                offset = value.translation
+                                showingDelete = abs(value.translation.width) > 100
+                            }
+                        }
+                        .onEnded { value in
+                            withAnimation(.spring()) {
+                                if abs(value.translation.width) > 100 {
+                                    offset = CGSize(width: -80, height: 0)
+                                } else {
+                                    offset = .zero
+                                    showingDelete = false
+                                }
+                            }
+                        }
+                )
+        }
+        .animation(.spring(), value: offset)
+        .animation(.spring(), value: showingDelete)
+    }
+}
+
+// MARK: - 长按上下文菜单
+struct LongPressContextMenu<Content: View, MenuItems: View>: View {
+    let content: Content
+    let menuItems: () -> MenuItems
+    @State private var isPressing = false
+
+    init(@ViewBuilder content: () -> Content, @ViewBuilder menuItems: @escaping () -> MenuItems) {
+        self.content = content()
+        self.menuItems = menuItems
+    }
+
+    var body: some View {
+        content
+            .scaleEffect(isPressing ? 0.98 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: isPressing)
+            .contextMenu(menuItems: menuItems)
+            .onLongPressGesture(
+                minimumDuration: 0,
+                maximumDistance: .infinity,
+                pressing: { pressing in
+                    isPressing = pressing
+                },
+                perform: {}
+            )
+    }
+}
+
+// MARK: - 加载动画指示器
+struct LoadingDots: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<3) { index in
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 8, height: 8)
+                    .scaleEffect(isAnimating ? 1.0 : 0.5)
+                    .animation(
+                        .easeInOut(duration: 0.6)
+                        .repeatForever()
+                        .delay(Double(index) * 0.2),
+                        value: isAnimating
+                    )
+            }
+        }
+        .onAppear {
+            isAnimating.toggle()
+        }
+    }
+}
+
+// MARK: - 脉冲动画视图
+struct PulseView<Content: View>: View {
+    let content: Content
+    @State private var isPulsing = false
+
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .scaleEffect(isPulsing ? 1.05 : 1.0)
+            .animation(
+                .easeInOut(duration: 1.5)
+                .repeatForever(autoreverses: true),
+                value: isPulsing
+            )
+            .onAppear {
+                isPulsing = true
+            }
+    }
+}
+
+// MARK: - 翻转卡片
+struct FlipCard<Front: View, Back: View>: View {
+    let front: Front
+    let back: Back
+    @State private var isFlipped = false
+
+    init(@ViewBuilder front: () -> Front, @ViewBuilder back: () -> Back) {
+        self.front = front()
+        self.back = back()
+    }
+
+    var body: some View {
+        ZStack {
+            front
+                .opacity(isFlipped ? 0 : 1)
+                .rotation3DEffect(
+                    .degrees(isFlipped ? 180 : 0),
+                    axis: (x: 0, y: 1, z: 0)
+                )
+
+            back
+                .opacity(isFlipped ? 1 : 0)
+                .rotation3DEffect(
+                    .degrees(isFlipped ? 0 : -180),
+                    axis: (x: 0, y: 1, z: 0)
+                )
+        }
+        .rotation3DEffect(
+            .degrees(isFlipped ? 180 : 0),
+            axis: (x: 0, y: 1, z: 0)
+        )
+        .onTapGesture {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                isFlipped.toggle()
+            }
+        }
+    }
+}
+
+// MARK: - 弹性文本输入框
+struct ElasticTextField: View {
+    let placeholder: String
+    @Binding var text: String
+    @State private var isEditing = false
+
+    var body: some View {
+        TextField(placeholder, text: $text)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 25)
+                    .fill(Color(.systemGray6))
+                    .scaleEffect(y: isEditing ? 1.1 : 1.0)
+            )
+            .animation(.spring(response: 0.3), value: isEditing)
+            .onTapGesture {
+                withAnimation(.spring(response: 0.3)) {
+                    isEditing = true
+                }
+            }
+            .onSubmit {
+                withAnimation(.spring(response: 0.3)) {
+                    isEditing = false
+                }
+            }
+    }
+}
+
+// MARK: - 预览
+struct InteractionComponents_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 20) {
+            BouncingButton(title: "添加记录", icon: "plus") {
+                print("Button tapped")
+            }
+
+            RippleButton(title: "保存") {
+                print("Ripple button tapped")
+            }
+
+            PulseView {
+                Circle()
+                    .fill(Color.green)
+                    .frame(width: 100, height: 100)
+            }
+
+            LoadingDots()
+        }
+        .padding()
+    }
+}
